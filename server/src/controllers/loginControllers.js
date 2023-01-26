@@ -20,7 +20,6 @@ const loginUser = async (req, res) => {
   } catch (error) {
     console.log('🚀 ~ error', error);
     return res.redirect('/login?error=error_unknown');
-    // res.send(`ERROR---> ${error}`);
   }
 };
 

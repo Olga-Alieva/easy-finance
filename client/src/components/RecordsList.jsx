@@ -3,7 +3,7 @@ import React from 'react';
 const RecordsList = ({ entries, setRecords }) => {
   const [loadingItem, setloadingItem] = React.useState(null);
 
-  const handleClick = async (id) => {
+  const deleteRecord = async (id) => {
     setloadingItem(id);
     setTimeout(async () => {
       const response = await fetch('/records', {
@@ -65,7 +65,7 @@ const RecordsList = ({ entries, setRecords }) => {
                       </td>
                       <td className="">
                         <button
-                          onClick={() => handleClick(entry.id)}
+                          onClick={() => deleteRecord(entry.id)}
                           type="button"
                           class="text-gray-900 text-xs bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         >

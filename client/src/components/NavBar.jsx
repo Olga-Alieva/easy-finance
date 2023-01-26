@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Avatar } from 'flowbite-react';
+import { UserContext } from '../context/UserContext';
 
-const NavBar = ({ user, active, destroySession }) => {
+const NavBar = ({ active }) => {
+  const { user, destroySession } = useContext(UserContext);
+
   const handleLogout = async () => {
     const response = await fetch('/logout');
     if (response.ok) {
       destroySession();
     }
   };
-
   return (
     <Navbar className="fixed w-full top-0 left-0" fluid={true} rounded={true}>
       <div className="container mx-auto mx-auto flex flex-wrap items-center justify-between">

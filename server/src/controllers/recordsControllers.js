@@ -1,11 +1,30 @@
+/* eslint-disable camelcase */
+const { Op } = require('sequelize');
+
 const { Category, User, Type, Entry } = require('../db/models');
 
 const renderRecords = async (req, res) => {
+  const { category_id, startDate, endDate } = req.query;
   const userId = req.session?.userId;
+  // `/records?category_id=${categoryId}&startDate=${startDate}&endDate=${endDate}`
+
+  const hasOnlyStartDate = Boolean(startDate && !endDate);
+  const hasOnlyEndDate = Boolean(endDate && !startDate);
+  const hasBothDates = Boolean(endDate && startDate);
+
+  const query = {
+    user_id: userId,
+    ...(category_id && { category_id }),
+    ...(hasOnlyStartDate && { date: { [Op.gte]: startDate } }),
+    ...(hasOnlyEndDate && { date: { [Op.lte]: endDate } }),
+    ...(hasBothDates && { date: { [Op.and]: { [Op.gte]: startDate, [Op.lte]: endDate } } }),
+  };
+
+
   if (userId) {
     const entries = await Entry.findAll({
       order: [['date', 'DESC']],
-      where: { user_id: userId },
+      where: query,
       raw: true,
       include: { model: Category },
       // include: [{ model: Category, include: [{ model: Type }] }],
@@ -17,11 +36,11 @@ const renderRecords = async (req, res) => {
     const totalExpenses = entries
       .filter((el) => el['Category.type_id'] === 1)
       .reduce((acc, el) => acc + +el.amount, 0);
-    console.log('🚀 ~ totalExpenses', totalExpenses);
 
     res.json({ entries, totalIncome, totalExpenses });
   }
 };
+
 const getCategories = async (req, res) => {
   const categories = await Category.findAll({ raw: true });
   // console.log('🚀 ~ categories', categories);
@@ -29,13 +48,8 @@ const getCategories = async (req, res) => {
 };
 const addRecord = async (req, res) => {
   const { category, date, amount } = req.body;
-  // console.log('🚀 ~ req.body', req.body);
-  // type: 'income',
-  // amount: '345.66',
-  // category: '37',
-  // date: '2023-01-21'
+ 
   const userId = req.session?.userId;
-  // console.log('🚀 ~ userId', userId);
   try {
     if (userId) {
       await Entry.create({ user_id: userId, category_id: category, date, amount });
@@ -50,7 +64,7 @@ const deleteEntry = async (req, res) => {
   try {
     const { id } = req.body;
     const entry = await Entry.findOne({ where: { id }, raw: true });
-    // console.log('🚀 ~ entry', entry);
+    
 
     if (userId === entry.user_id) {
       await Entry.destroy({ where: { id } });

@@ -5,9 +5,9 @@ import { ERRORS_MAP } from '../constants';
 import RadioButton from '../components/form/RadioButton';
 import Select from '../components/form/Select';
 
-const AddEntry = ({ user, destroySession }) => {
-  const queryParams = new URLSearchParams(window.location.search);
-  const error = queryParams.get('error');
+const AddEntry = () => {
+  // const queryParams = new URLSearchParams(window.location.search);
+  // const error = queryParams.get('error');
 
   const [categories, setCategories] = useState([]);
   // const [date, setDate] = useState(new Date());
@@ -29,22 +29,8 @@ const AddEntry = ({ user, destroySession }) => {
     [categories, active]
   );
 
-  // const handleDateChange = (event) => {
-  //   console.log('🚀 ~ event.target', event.target.value);
-  //   console.log('🚀 ~ convert', convertUTCDateToLocalDate(new Date(event.target.value + 'Z')));
-  //   setDate(convertUTCDateToLocalDate(new Date(event.target.value)));
-  // };
-
-  // function convertUTCDateToLocalDate(date) {
-  //   var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-  //   var offset = date.getTimezoneOffset() / 60;
-  //   var hours = date.getHours();
-  //   newDate.setHours(hours - offset);
-  //   return newDate;
-  // }
-
   return (
-    <Layout user={user} destroySession={destroySession}>
+    <Layout>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-8 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 
-const Register = ({ user, destroySession }) => {
+const Register = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const errorBack = queryParams.get('error');
 
@@ -15,8 +15,9 @@ const Register = ({ user, destroySession }) => {
       setError('password_mismatch');
     }
   };
+
   return (
-    <Layout user={user} destroySession={destroySession}>
+    <Layout>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-8 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
