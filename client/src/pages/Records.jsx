@@ -5,22 +5,26 @@ import RecordsList from '../components/RecordsList';
 import Spinner from '../components/Spinner';
 import Select from '../components/form/Select';
 import { UserContext } from '../context/UserContext';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Records = () => {
+  const dispatch = useDispatch();
   const { user } = useContext(UserContext);
-  const [records, setRecords] = useState([]);
   const [totalIncome, setTotalIncome] = useState(null);
   const [totalExpenses, setTotalExpenses] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState([]);
   let [startDate, setStartDate] = useState(null);
   let [endDate, setEndDate] = useState(null);
+  const categories = useSelector((state) => state.categories);
 
   const fetchCategories = async () => {
     const response = await fetch('/records/categories');
     const responseJson = await response.json();
-    setCategories(responseJson.categories);
+    dispatch({ type: 'SET_CATEGORIES', payload: responseJson.categories });
+    // setCategories(responseJson.categories);
   };
 
   useEffect(() => {
@@ -40,7 +44,8 @@ const Records = () => {
         }`
       );
       const responseJson = await response.json();
-      setRecords(responseJson.entries);
+      dispatch({ type: 'SET_ENTRIES', payload: responseJson.entries });
+      // setRecords(responseJson.entries);
       setTotalIncome(responseJson.totalIncome);
       setTotalExpenses(responseJson.totalExpenses);
       setIsLoading(false);
@@ -145,9 +150,7 @@ const Records = () => {
               <span className={`${total < 0 ? 'text-red-500' : 'text-green-700'}`}>{total}</span>
             </div>
           </div>
-          {user && Object.keys(user)?.length !== 0 ? (
-            <RecordsList entries={records} setRecords={setRecords} />
-          ) : null}
+          {user && Object.keys(user)?.length !== 0 ? <RecordsList /> : null}
         </>
       )}
     </Layout>

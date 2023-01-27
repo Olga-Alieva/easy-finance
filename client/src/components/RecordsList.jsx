@@ -1,9 +1,18 @@
 import React from 'react';
+import { useCallback } from 'react';
 
-const RecordsList = ({ entries, setRecords }) => {
+import { useSelector } from 'react-redux';
+
+import { useDispatch } from 'react-redux';
+
+const RecordsList = () => {
+  const entries = useSelector((state) => state.entries);
+
   const [loadingItem, setloadingItem] = React.useState(null);
 
-  const deleteRecord = async (id) => {
+  const dispatch = useDispatch();
+
+  const deleteRecord = useCallback(async (id) => {
     setloadingItem(id);
     setTimeout(async () => {
       const response = await fetch('/records', {
@@ -13,10 +22,11 @@ const RecordsList = ({ entries, setRecords }) => {
       });
       const responseJson = await response.json();
       if (responseJson.isSuccessful) {
-        setRecords(entries.filter((el) => el.id !== id));
+        dispatch({ type: 'DEL_ENTRY', payload: id });
+        // setRecords(entries.filter((el) => el.id !== id));
       }
     }, 1000);
-  };
+  }, []);
 
   return (
     <div>

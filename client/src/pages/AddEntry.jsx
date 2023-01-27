@@ -4,25 +4,28 @@ import { Link } from 'react-router-dom';
 import { ERRORS_MAP } from '../constants';
 import RadioButton from '../components/form/RadioButton';
 import Select from '../components/form/Select';
+import { useSelector } from 'react-redux';
 
 const AddEntry = () => {
+  const categories = useSelector((state) => state.categories);
+
   // const queryParams = new URLSearchParams(window.location.search);
   // const error = queryParams.get('error');
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   // const [date, setDate] = useState(new Date());
   // console.log('🚀 ~ date?.getDate()', date?.getDate());
   const [active, setActive] = useState(1);
 
-  const fetchCategories = async () => {
-    const response = await fetch('/records/categories');
-    const responseJson = await response.json();
-    setCategories(responseJson.categories);
-  };
+  // const fetchCategories = async () => {
+  //   const response = await fetch('/records/categories');
+  //   const responseJson = await response.json();
+  //   setCategories(responseJson.categories);
+  // };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, []);
 
   const currentCategories = useMemo(
     () => categories.filter((el) => el.type_id === active),
