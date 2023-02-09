@@ -11,12 +11,14 @@ export interface RecordsState {
   error: null | string;
   totalIncome?: number | null;
   totalExpenses?: number | null;
+  totalEntries: number;
 }
 
 interface RecordsPayload {
   entries: any[];
   totalExpenses: number | null;
   totalIncome: number | null;
+  totalEntries: number;
 }
 
 interface FetchRecordsAction {

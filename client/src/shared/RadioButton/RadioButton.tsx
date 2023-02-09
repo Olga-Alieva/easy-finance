@@ -1,12 +1,19 @@
+import { FC } from 'react';
 
-export const RadioButton = ({ title, active, setActive }) => {
-  const handleChange = (event) => {
+interface RadioButtonProps {
+  title: string;
+  active: number;
+  setActive: (active: number) => void;
+}
+
+export const RadioButton: FC<RadioButtonProps> = ({ title, active, setActive }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setActive(+event.target.value);
   };
 
   return (
     <div>
-      <h3 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{title}</h3>
+      <h3 className="block mb-2 text-sm font-medium text-gray-900 dark:text-whixte">{title}</h3>
       <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
           <div className="flex items-center pl-3">

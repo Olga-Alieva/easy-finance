@@ -6,6 +6,7 @@ const initialState: RecordsState = {
   error: null,
   totalIncome: null,
   totalExpenses: null,
+  totalEntries: 0,
 };
 
 export const recordsReducer = (state = initialState, action: RecordsAction): RecordsState => {
@@ -19,6 +20,7 @@ export const recordsReducer = (state = initialState, action: RecordsAction): Rec
         records: action.payload.entries,
         totalIncome: action.payload.totalIncome,
         totalExpenses: action.payload.totalExpenses,
+        totalEntries: action.payload.totalEntries,
       };
     case RecordsActionTypes.FETCH_RECORDS_ERROR:
       return { ...initialState, error: action.payload };
@@ -28,5 +30,3 @@ export const recordsReducer = (state = initialState, action: RecordsAction): Rec
       return state;
   }
 };
-
-

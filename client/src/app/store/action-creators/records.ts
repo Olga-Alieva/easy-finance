@@ -5,9 +5,17 @@ interface FetchRecordsProps {
   categoryId?: number;
   startDate?: Date;
   endDate?: Date;
+  offset: number;
+  limit: number;
 }
 
-export const fetchRecords = ({ categoryId, startDate, endDate }: FetchRecordsProps) => {
+export const fetchRecords = ({
+  categoryId,
+  startDate,
+  endDate,
+  offset = 0,
+  limit = 5,
+}: FetchRecordsProps) => {
   return async (dispatch: Dispatch<RecordsAction>) => {
     try {
       dispatch({ type: RecordsActionTypes.FETCH_RECORDS });
@@ -15,7 +23,8 @@ export const fetchRecords = ({ categoryId, startDate, endDate }: FetchRecordsPro
         const response = await fetch(
           `/records?category_id=${categoryId || ''}&startDate=${startDate || ''}&endDate=${
             endDate || ''
-          }`
+          }&offset=${offset}&limit=${limit}
+          `
         );
         const data = await response.json();
         dispatch({ type: RecordsActionTypes.FETCH_RECORDS_SUCCESS, payload: data });

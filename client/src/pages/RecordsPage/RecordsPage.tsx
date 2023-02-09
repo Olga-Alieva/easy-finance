@@ -9,43 +9,49 @@ import { Select } from 'shared/Select';
 import { Spinner } from 'shared/Spinner';
 import { RecordsList } from 'widgets/RecordsList';
 import { useActivePage } from 'app/store/hooks/useActivePage';
+import ReactPaginate from 'react-paginate';
+import { ITEMS_PER_PAGE } from 'app/constants';
 
 export const RecordsPage = () => {
   useActivePage('Records');
-  
+
   const { fetchCategories } = useActions(CategoriesActionCreators);
   const { fetchRecords } = useActions(RecordsActionCreators);
+  const { categories } = useTypedSelector((state) => state.categories);
   const {
-    categories,
-    error: errorCategories,
-    loading: loadingCategories,
-  } = useTypedSelector((state) => state.categories);
-  const {
-    records,
-    error: errorRecords,
     loading: loadingRecords,
     totalIncome,
     totalExpenses,
+    totalEntries,
   } = useTypedSelector((state) => state.records);
-  // console.log('🚀 ~ records', records);
+
   useEffect(() => {
     fetchCategories();
   }, []);
+
   const { user } = useContext(UserContext);
   const [categoryId, setCategoryId] = useState([]);
   let [startDate, setStartDate] = useState('');
   let [endDate, setEndDate] = useState('');
 
+  const [currentPage, setCurrentPage] = useState(0);
+
   useEffect(() => {
     if (!isDateCorrect) {
       return;
     }
-    fetchRecords({ categoryId, startDate, endDate });
-  }, [startDate, endDate, categoryId]);
+    fetchRecords({
+      categoryId,
+      startDate,
+      endDate,
+      offset: currentPage * ITEMS_PER_PAGE,
+      limit: ITEMS_PER_PAGE,
+    });
+  }, [startDate, endDate, categoryId, currentPage]);
 
   const total = useMemo(() => {
     if (totalIncome && totalExpenses) {
-      return parseInt((totalIncome - totalExpenses).toFixed(2));
+      return Number((totalIncome - totalExpenses).toFixed(2));
     } else {
       return 0;
     }
@@ -62,6 +68,10 @@ export const RecordsPage = () => {
       return true;
     }
   }, [startDate, endDate]);
+
+  function handlePageClick({ selected: selectedPage }: { selected: number }) {
+    setCurrentPage(selectedPage);
+  }
 
   return (
     <>
@@ -142,7 +152,39 @@ export const RecordsPage = () => {
               </div>
             )}
           </div>
-          {user && Object.keys(user)?.length !== 0 ? <RecordsList /> : null}
+          {user && Object.keys(user)?.length !== 0 ? (
+            <>
+              <RecordsList />
+              {totalEntries > 0 ? (
+                <div className="text-center mt-6">
+                  {
+                    <ReactPaginate
+                      previousLabel={'← Previous'}
+                      nextLabel={'Next →'}
+                      breakLabel="..."
+                      pageRangeDisplayed={5}
+                      pageCount={Math.ceil(totalEntries / ITEMS_PER_PAGE)}
+                      onPageChange={handlePageClick}
+                      forcePage={currentPage}
+                      containerClassName={'inline-flex -space-x-px'}
+                      previousLinkClassName={
+                        'px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                      }
+                      nextLinkClassName={
+                        'px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                      }
+                      pageLinkClassName={
+                        'px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+                      }
+                      activeLinkClassName={
+                        'px-3 py-2 text-green-600 border border-gray-300 bg-green-50 hover:bg-green-100 hover:text-green-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
+                      }
+                    />
+                  }
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </>
       )}
     </>

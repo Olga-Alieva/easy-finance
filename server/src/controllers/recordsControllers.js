@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { Category, Entry } = require('../db/models');
 
 const renderRecords = async (req, res) => {
-  const { category_id, startDate, endDate } = req.query;
+  const { category_id, startDate, endDate, limit, offset } = req.query;
   const userId = req.session?.userId;
   // `/records?category_id=${categoryId}&startDate=${startDate}&endDate=${endDate}`
 
@@ -21,28 +21,46 @@ const renderRecords = async (req, res) => {
   };
 
   if (userId) {
+    const allEntries = await Entry.findAll({
+      order: [
+        ['date', 'DESC'],
+        ['category_id', 'DESC'],
+      ],
+      where: query,
+      raw: true,
+      include: { model: Category },
+    });
     const entries = await Entry.findAll({
-      order: [['date', 'DESC']],
+      offset,
+      limit,
+      order: [
+        ['date', 'DESC'],
+        ['category_id', 'DESC'],
+      ],
       where: query,
       raw: true,
       include: { model: Category },
       // include: [{ model: Category, include: [{ model: Type }] }],
     });
 
-    const totalIncome = entries
+    const totalIncome = +allEntries
       .filter((el) => el['Category.type_id'] === 2)
-      .reduce((acc, el) => acc + +el.amount, 0);
-    const totalExpenses = entries
+      .reduce((acc, el) => acc + +el.amount, 0)
+      .toFixed(2);
+    const totalExpenses = +allEntries
       .filter((el) => el['Category.type_id'] === 1)
-      .reduce((acc, el) => acc + +el.amount, 0);
+      .reduce((acc, el) => acc + +el.amount, 0)
+      .toFixed(2);
+    const totalEntries = await Entry.count({ where: query });
+    console.log('🚀 ~ totalEntries', totalEntries);
 
-    res.json({ entries, totalIncome, totalExpenses });
+    res.json({ entries, totalIncome, totalExpenses, totalEntries });
   }
 };
 
 const getCategories = async (req, res) => {
   const categories = await Category.findAll({ raw: true });
-  console.log('🚀 ~ categories', categories);
+  // console.log('🚀 ~ categories', categories);
   res.json(categories);
 };
 

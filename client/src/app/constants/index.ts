@@ -9,3 +9,5 @@ export const ERRORS_MAP = {
   email_not_found: 'Email you entered was not found',
   error_unknown: 'Something went wrong. Please try again',
 };
+
+export const ITEMS_PER_PAGE = 5;
