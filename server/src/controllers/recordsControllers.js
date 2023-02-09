@@ -52,7 +52,6 @@ const renderRecords = async (req, res) => {
       .reduce((acc, el) => acc + +el.amount, 0)
       .toFixed(2);
     const totalEntries = await Entry.count({ where: query });
-    console.log('🚀 ~ totalEntries', totalEntries);
 
     res.json({ entries, totalIncome, totalExpenses, totalEntries });
   }
@@ -60,7 +59,6 @@ const renderRecords = async (req, res) => {
 
 const getCategories = async (req, res) => {
   const categories = await Category.findAll({ raw: true });
-  // console.log('🚀 ~ categories', categories);
   res.json(categories);
 };
 
