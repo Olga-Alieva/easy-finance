@@ -11,7 +11,9 @@ const {
 } = require('../controllers/recordsControllers');
 
 router.get('/', checkUser, renderRecords).delete('/', checkUser, deleteEntry);
-router.get('/categories', checkUser, getCategories);
+router.get('/categories', getCategories);
+// router.get('/categories', checkUser, getCategories);
+
 router.post('/add', checkUser, addRecord);
 
 module.exports = router;

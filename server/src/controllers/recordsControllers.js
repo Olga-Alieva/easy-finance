@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { Op } = require('sequelize');
 
-const { Category, User, Type, Entry } = require('../db/models');
+const { Category, Entry } = require('../db/models');
 
 const renderRecords = async (req, res) => {
   const { category_id, startDate, endDate } = req.query;
@@ -19,7 +19,6 @@ const renderRecords = async (req, res) => {
     ...(hasOnlyEndDate && { date: { [Op.lte]: endDate } }),
     ...(hasBothDates && { date: { [Op.and]: { [Op.gte]: startDate, [Op.lte]: endDate } } }),
   };
-
 
   if (userId) {
     const entries = await Entry.findAll({
@@ -43,12 +42,13 @@ const renderRecords = async (req, res) => {
 
 const getCategories = async (req, res) => {
   const categories = await Category.findAll({ raw: true });
-  // console.log('🚀 ~ categories', categories);
-  res.json({ categories });
+  console.log('🚀 ~ categories', categories);
+  res.json(categories);
 };
+
 const addRecord = async (req, res) => {
   const { category, date, amount } = req.body;
- 
+
   const userId = req.session?.userId;
   try {
     if (userId) {
@@ -64,7 +64,6 @@ const deleteEntry = async (req, res) => {
   try {
     const { id } = req.body;
     const entry = await Entry.findOne({ where: { id }, raw: true });
-    
 
     if (userId === entry.user_id) {
       await Entry.destroy({ where: { id } });

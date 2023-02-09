@@ -64,6 +64,6 @@ app.use('/logout', logoutRoutes);
 // app.use('/profile', profileRoutes);
 // app.use('/items', itemsRoutes);
 
-app.listen(PORT ?? 3100, () => {
-  console.log('Сервер запущен!');
+app.listen(PORT ?? 3600, () => {
+  console.log(`Сервер запущен! ${PORT}`);
 });
