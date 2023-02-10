@@ -14,8 +14,8 @@ export const PieChartSt = ({ data }: { data: DataElem[] }) => {
   //   { name: 'Group D', value: 200 },
   // ];
 
-  // const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-  const COLORS = ['#00C49F', '#FFBB28'];
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#00F'];
+  // const COLORS = ['#00C49F', '#FFBB28'];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({

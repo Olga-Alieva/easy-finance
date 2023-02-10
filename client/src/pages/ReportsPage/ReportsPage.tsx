@@ -2,6 +2,7 @@ import { useActivePage } from 'app/store/hooks/useActivePage';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useStore } from 'react-redux';
 import { PieChartSt } from 'widgets/PieChartSt';
+import { SimpleBarChart } from 'widgets/SimpleBarChart';
 
 export const ReportsPage = () => {
   useActivePage('Reports');
@@ -75,7 +76,9 @@ export const ReportsPage = () => {
           required
         />
       </div>
+      {/* <PieChartSt data={data} /> */}
       <PieChartSt data={data} />
+
     </div>
   );
 };

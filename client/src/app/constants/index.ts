@@ -10,7 +10,7 @@ export const ERRORS_MAP = {
   error_unknown: 'Something went wrong. Please try again',
 };
 
-export const ITEMS_PER_PAGE = 5;
+export const ITEMS_PER_PAGE = 10;
 
 const currentDate = new Date();
 export const PREVIOUS_MONTH = currentDate.getUTCMonth();
