@@ -3,7 +3,7 @@ const checkUser = require('../middlewares/common');
 
 const router = express.Router();
 
-const { renderStatistics } = require('../controllers/statisticsControllerrs');
+const { renderStatistics } = require('../controllers/statisticsControllers');
 
 router.get('/', checkUser, renderStatistics);
 

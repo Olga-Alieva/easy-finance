@@ -43,14 +43,14 @@ const renderRecords = async (req, res) => {
       // include: [{ model: Category, include: [{ model: Type }] }],
     });
 
-    const totalIncome = +allEntries
+    const totalIncome = Number(allEntries
       .filter((el) => el['Category.type_id'] === 2)
-      .reduce((acc, el) => acc + +el.amount, 0)
-      .toFixed(2);
-    const totalExpenses = +allEntries
+      .reduce((acc, el) => acc + Number(el.amount), 0)
+      .toFixed(2));
+    const totalExpenses = Number(allEntries
       .filter((el) => el['Category.type_id'] === 1)
-      .reduce((acc, el) => acc + +el.amount, 0)
-      .toFixed(2);
+      .reduce((acc, el) => acc + Number(el.amount), 0)
+      .toFixed(2));
     const totalEntries = await Entry.count({ where: query });
 
     res.json({ entries, totalIncome, totalExpenses, totalEntries });
