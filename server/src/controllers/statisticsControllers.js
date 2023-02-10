@@ -4,6 +4,21 @@ const { Category, Entry } = require('../db/models');
 const currentDate = new Date();
 const PREVIOUS_MONTH = currentDate.getUTCMonth();
 const CURRENT_YEAR = currentDate.getUTCFullYear();
+const CUR_MONTH = currentDate.getUTCMonth() + 1;
+const MONTHS = {
+  1: 'January',
+  2: 'February',
+  3: 'March',
+  4: 'April',
+  5: 'May',
+  6: 'June',
+  7: 'July',
+  8: 'August',
+  9: 'September',
+  10: 'October',
+  11: 'November',
+  12: 'December',
+};
 
 function formatMonth(arg) {
   return arg.toString().length > 1 ? arg : `0${arg}`;
@@ -22,103 +37,69 @@ const renderStatistics = async (req, res) => {
     });
 
     const totalIncomeForTheYear = allEntries.filter((el) => el['Category.type_id'] === 2);
-
     const totalExpencesForTheYear = allEntries.filter((el) => el['Category.type_id'] === 1);
     // stat for the year
-    // Jan========
-    const totalIncomeJanuary = Math.floor(
-      totalIncomeForTheYear
-        .filter((el) => el.date >= `${CURRENT_YEAR}-01-01` && el.date <= `${CURRENT_YEAR}-01-31`)
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
+    const dataYear = [];
+    for (let i = 1; i <= CUR_MONTH; i += 1) {
+      const totalIncomePerMonth = Math.floor(
+        totalIncomeForTheYear
+          .filter(
+            (el) =>
+              el.date >= `${CURRENT_YEAR}-${formatMonth(i)}-01` &&
+              el.date <= `${CURRENT_YEAR}-${formatMonth(i)}-31`
+          )
+          .reduce((acc, el) => acc + Number(el.amount), 0)
+      );
+      const totalExpencesPerMonth = Math.floor(
+        totalExpencesForTheYear
+          .filter(
+            (el) =>
+              el.date >= `${CURRENT_YEAR}-${formatMonth(i)}-01` &&
+              el.date <= `${CURRENT_YEAR}-${formatMonth(i)}-31`
+          )
+          .reduce((acc, el) => acc + Number(el.amount), 0)
+      );
+      dataYear.push({
+        name: `${MONTHS[i].slice(0, 3)} ${CURRENT_YEAR}`,
+        income: totalIncomePerMonth,
+        expences: totalExpencesPerMonth,
+      });
+    }
+    // stat per month
+    const datesMap = [
+      {
+        start: '01',
+        end: '08',
+      },
+      {
+        start: '09',
+        end: '16',
+      },
+      {
+        start: '17',
+        end: '23',
+      },
+      {
+        start: '24',
+        end: '31',
+      },
+    ];
 
-    const totalExpensesJanuary = Math.floor(
-      totalExpencesForTheYear
-        .filter((el) => el.date >= `${CURRENT_YEAR}-01-01` && el.date <= `${CURRENT_YEAR}-01-31`)
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
-    // Feb========
-    const totalIncomeFebruary = Math.floor(
-      totalIncomeForTheYear
-        .filter((el) => el.date >= `${CURRENT_YEAR}-02-01` && el.date <= `${CURRENT_YEAR}-02-28`)
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
-
-    const totalExpensesFebruary = Math.floor(
-      totalExpencesForTheYear
-        .filter((el) => el.date >= `${CURRENT_YEAR}-02-01` && el.date <= `${CURRENT_YEAR}-02-28`)
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
-    // stat for the prev month
     const prevMonth = formatMonth(PREVIOUS_MONTH);
-    const totalExpencesForTheFirstWeek = Math.floor(
-      totalExpencesForTheYear
-        .filter(
-          (el) =>
-            el.date >= `${CURRENT_YEAR}-${prevMonth}-01` &&
-            el.date <= `${CURRENT_YEAR}-${prevMonth}-08`
-        )
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
-    const totalExpencesForTheSecondWeek = Math.floor(
-      totalExpencesForTheYear
-        .filter(
-          (el) =>
-            el.date >= `${CURRENT_YEAR}-${prevMonth}-09` &&
-            el.date <= `${CURRENT_YEAR}-${prevMonth}-16`
-        )
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
-    const totalExpencesForTheThirdWeek = Math.floor(
-      totalExpencesForTheYear
-        .filter(
-          (el) =>
-            el.date >= `${CURRENT_YEAR}-${prevMonth}-17` &&
-            el.date <= `${CURRENT_YEAR}-${prevMonth}-23`
-        )
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
-    const totalExpencesForTheForthWeek = Math.floor(
-      totalExpencesForTheYear
-        .filter(
-          (el) =>
-            el.date >= `${CURRENT_YEAR}-${prevMonth}-24` &&
-            el.date <= `${CURRENT_YEAR}-${prevMonth}-31`
-        )
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-    );
 
-    const dataYear = [
-      {
-        name: `Jan ${CURRENT_YEAR}`,
-        income: totalIncomeJanuary,
-        expences: totalExpensesJanuary,
-      },
-      {
-        name: `Feb ${CURRENT_YEAR}`,
-        income: totalIncomeFebruary,
-        expences: totalExpensesFebruary,
-      },
-    ];
+    const dataMonth = datesMap.map((item, i) => ({
+      name: `${i + 1} week`,
+      expences: Math.floor(
+        totalExpencesForTheYear
+          .filter(
+            (el) =>
+              el.date >= `${CURRENT_YEAR}-${prevMonth}-${item.start}` &&
+              el.date <= `${CURRENT_YEAR}-${prevMonth}-${item.end}`
+          )
+          .reduce((acc, el) => acc + Number(el.amount), 0)
+      ),
+    }));
 
-    const dataMonth = [
-      {
-        name: '1 week',
-        expences: totalExpencesForTheFirstWeek,
-      },
-      {
-        name: '2 week',
-        expences: totalExpencesForTheSecondWeek,
-      },
-      {
-        name: '3 week',
-        expences: totalExpencesForTheThirdWeek,
-      },
-      {
-        name: '4 week',
-        expences: totalExpencesForTheForthWeek,
-      },
-    ];
     res.json({ dataYear, dataMonth });
   }
 };

@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { MainPage } from 'pages/MainPage';
 import { LoginPage } from 'pages/LoginPage';
 import { Layout } from 'app/Layout';
-import { RegisterPage } from 'pages/RegisterPage.jsx';
+import { RegisterPage } from 'pages/RegisterPage';
 import { AddEntryPage } from 'pages/AddEntryPage';
 import { ProtectedRoute } from 'app/Route';
 import { RecordsPage } from 'pages/RecordsPage';
@@ -10,6 +10,7 @@ import { UserContext } from './providers/UserContext';
 import { useContext, useEffect } from 'react';
 import { StatisticsPage } from 'pages/StatisticsPage';
 import { SimpleBarChart } from 'widgets/SimpleBarChart';
+import { ReportsPage } from 'pages/ReportsPage';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -51,7 +52,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <ReportsPage />
+            </ProtectedRoute>
+          }
+        />
         {/* Using path="*"" means "match anything", so this route
           acts like a catch-all for URLs that we don't have explicit
           routes for. */}

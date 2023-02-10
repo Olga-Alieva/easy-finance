@@ -20,9 +20,8 @@ const logoutRoutes = require('./routes/logoutRoutes');
 const regRoutes = require('./routes/regRoutes');
 const checkAuthRoutes = require('./routes/checkAuthUserRoutes');
 const recordsRoutes = require('./routes/recordsRoutes');
-
 const statisticsRoutes = require('./routes/statisticsRoutes');
-
+const reportsRoutes = require('./routes/reportsRoutes');
 // const itemsRoutes = require('./routes/itemsRoutes');
 
 app.use(morgan('dev'));
@@ -61,6 +60,8 @@ app.use('/check-auth-user', checkAuthRoutes);
 app.use('/records', recordsRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/statistics', statisticsRoutes);
+app.use('/reports', reportsRoutes);
+// app.use('/mydocuments', mydocumentsRoutes);
 // app.use('/items', itemsRoutes);
 
 app.listen(PORT ?? 3600, () => {
