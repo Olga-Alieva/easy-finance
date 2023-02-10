@@ -8,6 +8,8 @@ import { ProtectedRoute } from 'app/Route';
 import { RecordsPage } from 'pages/RecordsPage';
 import { UserContext } from './providers/UserContext';
 import { useContext, useEffect } from 'react';
+import { StatisticsPage } from 'pages/StatisticsPage';
+import { SimpleBarChart } from 'widgets/SimpleBarChart';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -37,6 +39,15 @@ function App() {
           element={
             <ProtectedRoute>
               <RecordsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/statistics"
+          element={
+            <ProtectedRoute>
+              <SimpleBarChart />
+              {/* <StatisticsPage /> */}
             </ProtectedRoute>
           }
         />

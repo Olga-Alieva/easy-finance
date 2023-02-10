@@ -63,79 +63,78 @@ export const NavBar: FC = () => {
         )}
         <Navbar.Toggle />
         <Navbar.Collapse>
-          <Navbar.Link
-            href="/"
+          <Link
+            to="/"
             className={`hover:md:text-green-500 ${
               activePage === 'Home' ? 'md:text-green-700' : ''
             }`}
             // active={active === 'Home'}
           >
             Home
-          </Navbar.Link>
+          </Link>
 
           {user && Object.keys(user)?.length !== 0 ? (
             <>
-              <Navbar.Link
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'Records' ? 'md:text-green-700' : ''
                 }`}
-                // active={active === 'Records'}
-                href="/records"
+                to="/records"
               >
                 Records
-              </Navbar.Link>
-              <Navbar.Link
+              </Link>
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'Statistics' ? 'md:text-green-700' : ''
                 }`}
-                href="/statistics"
+                to="/statistics"
               >
                 Statistics
-              </Navbar.Link>
+              </Link>
               {/* <Navbar.Link className="md:hover:text-green-700" href="/reports"></Navbar.Link> */}
-              <Navbar.Link
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'Reports' ? 'md:text-green-700' : ''
                 }`}
-                href="/reports"
+                to="/reports"
               >
                 Reports
-              </Navbar.Link>
+              </Link>
             </>
           ) : (
             <>
-              <Navbar.Link
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'About' ? 'md:text-green-700' : ''
                 }`}
-                href="/about"
+                to="/about"
               >
                 About
-              </Navbar.Link>
-              <Navbar.Link
+              </Link>
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'Services' ? 'md:text-green-700' : ''
                 }`}
-                href="/services"
+                to="/services"
               >
                 Services
-              </Navbar.Link>
-              <Navbar.Link
+              </Link>
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'Pricing' ? 'md:text-green-700' : ''
                 }`}
-                href="/pricing"
+                to="/pricing"
               >
                 Pricing
-              </Navbar.Link>
-              <Navbar.Link
+              </Link>
+              <Link
                 className={`hover:md:text-green-500 ${
                   activePage === 'Contacts' ? 'md:text-green-700' : ''
                 }`}
-                href="/contacts"
+                to="/contacts"
               >
                 Contacts
-              </Navbar.Link>
+              </Link>
             </>
           )}
         </Navbar.Collapse>
@@ -143,4 +142,3 @@ export const NavBar: FC = () => {
     </Navbar>
   );
 };
-

@@ -21,7 +21,7 @@ const regRoutes = require('./routes/regRoutes');
 const checkAuthRoutes = require('./routes/checkAuthUserRoutes');
 const recordsRoutes = require('./routes/recordsRoutes');
 
-// const profileRoutes = require('./routes/profileRoutes');
+const statisticsRoutes = require('./routes/statisticsRoutes');
 
 // const itemsRoutes = require('./routes/itemsRoutes');
 
@@ -60,8 +60,7 @@ app.use('/register', regRoutes);
 app.use('/check-auth-user', checkAuthRoutes);
 app.use('/records', recordsRoutes);
 app.use('/logout', logoutRoutes);
-
-// app.use('/profile', profileRoutes);
+app.use('/statistics', statisticsRoutes);
 // app.use('/items', itemsRoutes);
 
 app.listen(PORT ?? 3600, () => {

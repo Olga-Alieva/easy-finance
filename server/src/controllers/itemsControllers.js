@@ -5,6 +5,10 @@ const OneItem = require('../views/OneItem.jsx');
 const Error = require('../views/Error.jsx');
 const { User, Item, Bid } = require('../db/models');
 
+
+
+
+
 const renderProfile = async (req, res) => {
   const { userEmail } = req.session || { userEmail: null };
   const userId = req.session?.userId;
