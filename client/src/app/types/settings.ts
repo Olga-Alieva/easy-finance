@@ -10,7 +10,9 @@ export type PageType =
   | 'Pricing'
   | 'Services'
   | 'Reports'
-  | 'Statistics';
+  | 'Statistics'
+  | 'MyDocuments'
+  | 'Taxes';
 
 export interface SettingsState {
   activePage: PageType | null;

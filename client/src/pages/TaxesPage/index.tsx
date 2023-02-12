@@ -1,0 +1,1 @@
+export { TaxesPage } from './TaxesPage';

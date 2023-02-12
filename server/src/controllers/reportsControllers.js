@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const { Category, Entry } = require('../db/models');
 
+
 const renderReports = async (req, res) => {
   const userId = req.session?.userId;
   const { startDate, endDate } = req.query;

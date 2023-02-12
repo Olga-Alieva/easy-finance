@@ -11,6 +11,8 @@ import { useContext, useEffect } from 'react';
 import { StatisticsPage } from 'pages/StatisticsPage';
 import { SimpleBarChart } from 'widgets/SimpleBarChart';
 import { ReportsPage } from 'pages/ReportsPage';
+import { TaxesPage } from 'pages/TaxesPage';
+import { DocumentsPage } from 'pages/DocumentsPage';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -57,6 +59,22 @@ function App() {
           element={
             <ProtectedRoute>
               <ReportsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/taxes"
+          element={
+            <ProtectedRoute>
+              <TaxesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/documents"
+          element={
+            <ProtectedRoute>
+              <DocumentsPage />
             </ProtectedRoute>
           }
         />

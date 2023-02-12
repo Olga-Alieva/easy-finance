@@ -30,3 +30,19 @@ export const MONTH: Record<number, string> = {
   11: 'November',
   12: 'December',
 };
+
+// export const TAXES = {
+//   AB: { fedTax: 0.2, provTax: 0.05 },
+//   ON: { fedTax: 0.2, provTax: 0.05 },
+//   BC: { fedTax: 0.2, provTax: 0.05 },
+//   NL: { fedTax: 0.2, provTax: 0.05 },
+//   NT: { fedTax: 0.2, provTax: 0.05 },
+//   NS: { fedTax: 0.2, provTax: 0.05 },
+//   NU: { fedTax: 0.2, provTax: 0.05 },
+//   PE: { fedTax: 0.2, provTax: 0.05 },
+//   QC: { fedTax: 0.2, provTax: 0.05 },
+//   SK: { fedTax: 0.2, provTax: 0.05 },
+//   YT: { fedTax: 0.2, provTax: 0.05 },
+//   MB: { fedTax: 0.2, provTax: 0.05 },
+//   NB: { fedTax: 0.2, provTax: 0.05 },
+// };

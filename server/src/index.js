@@ -14,14 +14,15 @@ const app = express();
 // const indexRoutes = require('./routes/indexRoutes');
 
 const loginRoutes = require('./routes/loginRoutes');
-
 const logoutRoutes = require('./routes/logoutRoutes');
-
 const regRoutes = require('./routes/regRoutes');
 const checkAuthRoutes = require('./routes/checkAuthUserRoutes');
 const recordsRoutes = require('./routes/recordsRoutes');
 const statisticsRoutes = require('./routes/statisticsRoutes');
 const reportsRoutes = require('./routes/reportsRoutes');
+// const documentsRoutes = require('./routes/documentsRoutes');
+// const taxesRoutes = require('./routes/taxesRoutes');
+
 // const itemsRoutes = require('./routes/itemsRoutes');
 
 app.use(morgan('dev'));
@@ -61,6 +62,9 @@ app.use('/records', recordsRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/statistics', statisticsRoutes);
 app.use('/reports', reportsRoutes);
+// app.use('/documents', documentsRoutes);
+// app.use('/taxes', taxesRoutes);
+
 // app.use('/mydocuments', mydocumentsRoutes);
 // app.use('/items', itemsRoutes);
 

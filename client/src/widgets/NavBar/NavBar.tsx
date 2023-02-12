@@ -100,6 +100,22 @@ export const NavBar: FC = () => {
               >
                 Reports
               </Link>
+              <Link
+                className={`hover:md:text-green-500 ${
+                  activePage === 'MyDocuments' ? 'md:text-green-700' : ''
+                }`}
+                to="/documents"
+              >
+                My documents
+              </Link>
+              <Link
+                className={`hover:md:text-green-500 ${
+                  activePage === 'Taxes' ? 'md:text-green-700' : ''
+                }`}
+                to="/taxes"
+              >
+                Taxes
+              </Link>
             </>
           ) : (
             <>
