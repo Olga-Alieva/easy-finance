@@ -49,8 +49,8 @@ function App() {
           path="/statistics"
           element={
             <ProtectedRoute>
-              <SimpleBarChart />
-              {/* <StatisticsPage /> */}
+              {/* <SimpleBarChart /> */}
+              <StatisticsPage />
             </ProtectedRoute>
           }
         />

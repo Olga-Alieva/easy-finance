@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { DataItem } from 'widgets/SimpleBarChart/SimpleBarChart';
+import { DataItem } from 'pages/StatisticsPage/StatisticsPage';
 // const data = [
 //   {
 //     name: 'Page A',
