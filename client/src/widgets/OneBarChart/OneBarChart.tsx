@@ -28,7 +28,7 @@ export const OneBarChart = ({ data }: { data: DataItem[] }) => {
       <Tooltip />
       <Legend />
       <CartesianGrid strokeDasharray="3 3" />
-      <Bar dataKey="expences" fill="#8884d8" background={{ fill: '#eee' }} />
+      <Bar dataKey="expenses" fill="#8884d8" background={{ fill: '#eee' }} />
     </BarChart>
   );
 };

@@ -1,7 +1,6 @@
 const { Op } = require('sequelize');
 const { Category, Entry } = require('../db/models');
 
-
 const renderReports = async (req, res) => {
   const userId = req.session?.userId;
   const { startDate, endDate } = req.query;
@@ -18,7 +17,7 @@ const renderReports = async (req, res) => {
   };
 
   if (userId) {
-    const data = [];
+    const dataForPeriod = [];
     const allEntries = await Entry.findAll({
       order: [
         ['date', 'DESC'],
@@ -34,31 +33,38 @@ const renderReports = async (req, res) => {
         .filter((el) => el['Category.type_id'] === 2)
         .reduce((acc, el) => acc + Number(el.amount), 0)
     );
-    const totalExpencesForReqPeriod = Math.floor(
+    const totalExpensesForReqPeriod = Math.floor(
       allEntries
         .filter((el) => el['Category.type_id'] === 1)
         .reduce((acc, el) => acc + Number(el.amount), 0)
     );
-    const totalExpences = allEntries.filter((el) => el['Category.type_id'] === 1);
+    const totalExpenses = allEntries.filter((el) => el['Category.type_id'] === 1);
 
-    const objDataCateg = totalExpences.reduce((obj, el) => {
+    const objDataCateg = totalExpenses.reduce((obj, el) => {
       obj[el['Category.category']] = obj[el['Category.category']]
         ? obj[el['Category.category']] + Number(el.amount)
         : Number(el.amount);
       return obj;
     }, {});
 
-    const dataTopExpences = Object.entries(objDataCateg)
+    const dataCategories = Object.entries(objDataCateg)
       .sort((a, b) => b[1] - a[1])
       .map(([key, val]) => ({ name: key, value: val }))
       .slice(0, 5);
-    console.log('🚀 ~ newArr', dataTopExpences);
+    // console.log('🚀 ~ newArr', dataCategories);
+    dataForPeriod.push({
+      // name: 'req period',
+      income: totalIncomeForReqPeriod,
+      expenses: totalExpensesForReqPeriod,
+    });
 
-    data.push(
-      { name: 'expences', value: totalExpencesForReqPeriod },
-      { name: 'income', value: totalIncomeForReqPeriod }
-    );
-    res.json(dataTopExpences);
+    // dataForPeriod.push(
+    //   { name: 'expenses', value: totalExpensesForReqPeriod },
+    //   { name: 'income', value: totalIncomeForReqPeriod }
+    // );
+    console.log('🚀 ~ dataForPeriod', dataForPeriod);
+    // console.log('🚀 ~ dataCategories', dataCategories);
+    res.json({ dataCategories, dataForPeriod });
   }
 };
 

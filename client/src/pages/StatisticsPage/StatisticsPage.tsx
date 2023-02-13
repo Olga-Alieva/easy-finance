@@ -5,9 +5,9 @@ import { OneBarChart } from 'widgets/OneBarChart';
 import { SimpleBarChart } from 'widgets/SimpleBarChart';
 
 export type DataItem = {
-  name: string;
+  name?: string;
   income: number;
-  expences?: number;
+  expenses?: number;
 };
 
 type DataType = {
@@ -34,7 +34,7 @@ export const StatisticsPage = () => {
     <>
       Statistics for the year of {CURRENT_YEAR}:
       <SimpleBarChart data={data.dataYear} />
-      Your expences for {MONTH[PREVIOUS_MONTH]}:
+      Your expenses for {MONTH[PREVIOUS_MONTH]}:
       <OneBarChart data={data.dataMonth} />
     </>
   );

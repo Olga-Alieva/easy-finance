@@ -9,15 +9,15 @@ export interface RecordsState {
   records: any[];
   loading: boolean;
   error: null | string;
-  totalIncome?: number | null;
-  totalExpenses?: number | null;
+  totalIncome: number;
+  totalExpenses: number;
   totalEntries: number;
 }
 
 interface RecordsPayload {
   entries: any[];
-  totalExpenses: number | null;
-  totalIncome: number | null;
+  totalExpenses: number;
+  totalIncome: number;
   totalEntries: number;
 }
 
@@ -35,7 +35,7 @@ interface FetchRecordsErrorAction {
 }
 interface FetchRecordDeleteAction {
   type: RecordsActionTypes.FETCH_RECORD_DELETE;
-  payload: number;
+  payload: { id: number; type: number; amount: string };
 }
 
 export type RecordsAction =

@@ -9,10 +9,13 @@ export const RecordsList: FC = () => {
   const { records } = useTypedSelector((state) => state.records);
   const [loadingItem, setloadingItem] = React.useState<number | null>(null);
 
-  const deleteRecord = useCallback((id: number) => {
-    setloadingItem(id);
-    deleteRecordFetch(id);
-  }, []);
+  const deleteRecord = useCallback(
+    ({ id, type, amount }: { id: number; type: number; amount: string }) => {
+      setloadingItem(id);
+      deleteRecordFetch(id, type, amount);
+    },
+    []
+  );
 
   return (
     <div>
@@ -73,7 +76,13 @@ export const RecordsList: FC = () => {
                       </td>
                       <td className="">
                         <button
-                          onClick={() => deleteRecord(entry.id)}
+                          onClick={() =>
+                            deleteRecord({
+                              id: entry.id,
+                              type: entry['Category.type_id'],
+                              amount: entry.amount,
+                            })
+                          }
                           type="button"
                           className="text-gray-900 text-xs bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         >

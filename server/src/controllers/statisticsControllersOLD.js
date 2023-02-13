@@ -77,28 +77,28 @@ const renderStatistics = async (req, res) => {
         .reduce((acc, el) => acc + Number(el.amount), 0)
         .toFixed(2)
     );
-    
+
     const data = [
       {
         name: 'Jan 2023',
         income: totalIncomeJanuary,
-        expences: totalExpensesJanuary,
+        expenses: totalExpensesJanuary,
         // amt: Math.abs(totalExpensesJanuary - totalIncomeJanuary),
       },
       {
         name: 'Feb 2023',
         income: totalIncomeFebruary,
-        expences: totalExpensesFebruary,
+        expenses: totalExpensesFebruary,
         // amt: Math.abs(totalExpensesFebruary - totalIncomeFebruary),
       },
     ];
-    // stat for previous month expences
+    // stat for previous month expenses
 
-    let allExpencesPrevMonth;
+    let allExpensesPrevMonth;
 
     if (FULL_MONTH_OF_DAYS_ONE_NUMBER.includes(PREVIOUS_MONTH)) {
       console.log('condition 1');
-      allExpencesPrevMonth = await Entry.findAll({
+      allExpensesPrevMonth = await Entry.findAll({
         order: [
           ['date', 'DESC'],
           ['category_id', 'DESC'],
@@ -115,9 +115,9 @@ const renderStatistics = async (req, res) => {
         },
         raw: true,
       });
-      console.log('🚀 ~ allExpencesPrevMonth======', allExpencesPrevMonth);
+      console.log('🚀 ~ allExpensesPrevMonth======', allExpensesPrevMonth);
     } else if (FULL_MONTH_OF_DAYS_TWO_NUMBERS.includes(PREVIOUS_MONTH)) {
-      allExpencesPrevMonth = await Entry.findAll({
+      allExpensesPrevMonth = await Entry.findAll({
         order: [
           ['date', 'DESC'],
           ['category_id', 'DESC'],
@@ -135,7 +135,7 @@ const renderStatistics = async (req, res) => {
         include: { model: Category },
       });
     } else if (FEBRUARY.include(PREVIOUS_MONTH) && !LEAP_YEARS.includes(CURRENT_YEAR)) {
-      allExpencesPrevMonth = await Entry.findAll({
+      allExpensesPrevMonth = await Entry.findAll({
         order: [
           ['date', 'DESC'],
           ['category_id', 'DESC'],
@@ -153,7 +153,7 @@ const renderStatistics = async (req, res) => {
         include: { model: Category },
       });
     } else if (FEBRUARY.include(PREVIOUS_MONTH) && LEAP_YEARS.includes(CURRENT_YEAR)) {
-      allExpencesPrevMonth = await Entry.findAll({
+      allExpensesPrevMonth = await Entry.findAll({
         order: [
           ['date', 'DESC'],
           ['category_id', 'DESC'],
@@ -171,7 +171,7 @@ const renderStatistics = async (req, res) => {
         include: { model: Category },
       });
     } else if (NOT_FULL_MONTH_OF_DAYS_ONE_NUMBER.includes(PREVIOUS_MONTH)) {
-      allExpencesPrevMonth = await Entry.findAll({
+      allExpensesPrevMonth = await Entry.findAll({
         order: [
           ['date', 'DESC'],
           ['category_id', 'DESC'],
@@ -189,7 +189,7 @@ const renderStatistics = async (req, res) => {
         include: { model: Category },
       });
     } else {
-      allExpencesPrevMonth = await Entry.findAll({
+      allExpensesPrevMonth = await Entry.findAll({
         order: [
           ['date', 'DESC'],
           ['category_id', 'DESC'],
@@ -208,11 +208,11 @@ const renderStatistics = async (req, res) => {
       });
     }
     const firstweek = [1, 2, 3, 4, 5, 6, 7, 10];
-    const totalExpencesPrevMonthFirstWeek = allExpencesPrevMonth.filter(
+    const totalExpensesPrevMonthFirstWeek = allExpensesPrevMonth.filter(
       (el) => el['Category.type_id'] === 1 && firstweek.includes(Number(el.date.slice(-2)))
     );
 
-    console.log('🚀 ~ totalExpencesPrevMonth', totalExpencesPrevMonthFirstWeek);
+    console.log('🚀 ~ totalExpensesPrevMonth', totalExpensesPrevMonthFirstWeek);
 
     // const totalIncomeFebruary = Number(
     //   allEntriesFebruary

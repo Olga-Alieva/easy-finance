@@ -37,7 +37,7 @@ const renderStatistics = async (req, res) => {
     });
 
     const totalIncomeForTheYear = allEntries.filter((el) => el['Category.type_id'] === 2);
-    const totalExpencesForTheYear = allEntries.filter((el) => el['Category.type_id'] === 1);
+    const totalExpensesForTheYear = allEntries.filter((el) => el['Category.type_id'] === 1);
     // stat for the year
     const dataYear = [];
     for (let i = 1; i <= CUR_MONTH; i += 1) {
@@ -50,8 +50,8 @@ const renderStatistics = async (req, res) => {
           )
           .reduce((acc, el) => acc + Number(el.amount), 0)
       );
-      const totalExpencesPerMonth = Math.floor(
-        totalExpencesForTheYear
+      const totalExpensesPerMonth = Math.floor(
+        totalExpensesForTheYear
           .filter(
             (el) =>
               el.date >= `${CURRENT_YEAR}-${formatMonth(i)}-01` &&
@@ -62,7 +62,7 @@ const renderStatistics = async (req, res) => {
       dataYear.push({
         name: `${MONTHS[i].slice(0, 3)} ${CURRENT_YEAR}`,
         income: totalIncomePerMonth,
-        expences: totalExpencesPerMonth,
+        expenses: totalExpensesPerMonth,
       });
     }
     // stat per month
@@ -89,8 +89,8 @@ const renderStatistics = async (req, res) => {
 
     const dataMonth = datesMap.map((item, i) => ({
       name: `${i + 1} week`,
-      expences: Math.floor(
-        totalExpencesForTheYear
+      expenses: Math.floor(
+        totalExpensesForTheYear
           .filter(
             (el) =>
               el.date >= `${CURRENT_YEAR}-${prevMonth}-${item.start}` &&

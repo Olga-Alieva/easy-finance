@@ -38,7 +38,7 @@ export const fetchRecords = ({
   };
 };
 
-export const deleteRecordFetch = (id: number) => {
+export const deleteRecordFetch = (id: number, type: number, amount: string) => {
   return async (dispatch: Dispatch<RecordsAction>) => {
     try {
       setTimeout(async () => {
@@ -49,7 +49,7 @@ export const deleteRecordFetch = (id: number) => {
         });
         const responseJson = await response.json();
         if (responseJson.isSuccessful) {
-          dispatch({ type: RecordsActionTypes.FETCH_RECORD_DELETE, payload: id });
+          dispatch({ type: RecordsActionTypes.FETCH_RECORD_DELETE, payload: { id, type, amount } });
         } else {
           throw new Error('could not delete record');
         }

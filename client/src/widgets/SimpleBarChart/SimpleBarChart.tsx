@@ -11,12 +11,21 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export const SimpleBarChart = ({ data }: { data: DataItem[] }) => {
+export const SimpleBarChart = ({
+  data,
+  width = 500,
+  height = 400,
+}: {
+  data: DataItem[];
+  width?: number;
+  height?: number;
+}) => {
+  console.log(data);
   return (
     <>
       <BarChart
-        width={500}
-        height={400}
+        width={width}
+        height={height}
         data={data}
         margin={{
           top: 20,
@@ -31,7 +40,7 @@ export const SimpleBarChart = ({ data }: { data: DataItem[] }) => {
         <Tooltip />
         <Legend />
         <Bar dataKey="income" fill="#82ca9d" />
-        <Bar dataKey="expences" fill="#8884d8" />
+        <Bar dataKey="expenses" fill="#8884d8" />
       </BarChart>
     </>
   );
