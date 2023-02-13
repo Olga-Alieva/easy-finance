@@ -13,6 +13,7 @@ import { SimpleBarChart } from 'widgets/SimpleBarChart';
 import { ReportsPage } from 'pages/ReportsPage';
 import { TaxesPage } from 'pages/TaxesPage';
 import { DocumentsPage } from 'pages/DocumentsPage';
+import { EditEntryPage } from 'pages/EditEntryPage';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -42,6 +43,14 @@ function App() {
           element={
             <ProtectedRoute>
               <RecordsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/records/:id"
+          element={
+            <ProtectedRoute>
+              <EditEntryPage />
             </ProtectedRoute>
           }
         />

@@ -43,14 +43,18 @@ const renderRecords = async (req, res) => {
       // include: [{ model: Category, include: [{ model: Type }] }],
     });
 
-    const totalIncome = Number(allEntries
-      .filter((el) => el['Category.type_id'] === 2)
-      .reduce((acc, el) => acc + Number(el.amount), 0)
-      .toFixed(2));
-    const totalExpenses = Number(allEntries
-      .filter((el) => el['Category.type_id'] === 1)
-      .reduce((acc, el) => acc + Number(el.amount), 0)
-      .toFixed(2));
+    const totalIncome = Number(
+      allEntries
+        .filter((el) => el['Category.type_id'] === 2)
+        .reduce((acc, el) => acc + Number(el.amount), 0)
+        .toFixed(2)
+    );
+    const totalExpenses = Number(
+      allEntries
+        .filter((el) => el['Category.type_id'] === 1)
+        .reduce((acc, el) => acc + Number(el.amount), 0)
+        .toFixed(2)
+    );
     const totalEntries = await Entry.count({ where: query });
 
     res.json({ entries, totalIncome, totalExpenses, totalEntries });
@@ -92,5 +96,29 @@ const deleteEntry = async (req, res) => {
     res.json({ isSuccessful: false });
   }
 };
+const editRecord = async (req, res) => {
+  const userId = req.session?.userId;
+  try {
+    const { id } = req.params;
+    const { amount, category, date } = req.body;
+    const entry = await Entry.findOne({ where: { id }, raw: true });
+    if (userId !== entry.user_id) {
+      await Entry.update(
+        {
+          amount,
+          category_id: category,
+          date,
+        },
+        { where: { id } }
+      );
+      res.redirect('/records');
+    } else {
+      const message = 'edit_error';
+      res.redirect(`/records/${id}?error=${message}`);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-module.exports = { renderRecords, getCategories, addRecord, deleteEntry };
+module.exports = { renderRecords, getCategories, addRecord, deleteEntry, editRecord };

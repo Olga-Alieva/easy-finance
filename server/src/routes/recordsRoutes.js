@@ -8,11 +8,12 @@ const {
   getCategories,
   addRecord,
   deleteEntry,
+  editRecord,
 } = require('../controllers/recordsControllers');
 
 router.get('/', checkUser, renderRecords).delete('/', checkUser, deleteEntry);
 router.get('/categories', checkUser, getCategories);
 
-router.post('/add', checkUser, addRecord);
+router.post('/add', checkUser, addRecord).post('/:id', checkUser, editRecord);
 
 module.exports = router;

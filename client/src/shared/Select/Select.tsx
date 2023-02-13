@@ -3,11 +3,21 @@ interface SelectProps {
   title?: string;
   onChange?: (e: any) => void;
   showAll?: boolean;
+  activeCat?: number | 0;
 }
 
-export const Select = ({ title, categories, onChange, showAll = false }: SelectProps) => {
+export const Select = ({
+  title,
+  categories,
+  onChange,
+  showAll = false,
+  activeCat,
+}: SelectProps) => {
   // console.log("🚀 ~ categories", categories);
   // console.log('🚀 ~ showAll', showAll);
+
+  // console.log('find', categories?.find((el) => el.id === activeCat)?.category);
+
   return (
     <div>
       <label
@@ -17,6 +27,7 @@ export const Select = ({ title, categories, onChange, showAll = false }: SelectP
         {title}
       </label>
       <select
+        defaultValue={activeCat}
         onChange={onChange}
         name="category"
         id="categories"
@@ -24,7 +35,7 @@ export const Select = ({ title, categories, onChange, showAll = false }: SelectP
       >
         {showAll && <option value="">All</option>}
         {categories?.map((item) => (
-          <option value={item.id} key={item.id}>
+          <option value={item.id} selected={item.id === activeCat} key={item.id}>
             {item.category}
           </option>
         ))}
@@ -32,3 +43,7 @@ export const Select = ({ title, categories, onChange, showAll = false }: SelectP
     </div>
   );
 };
+
+// onChange={(e) => {
+//   setCategoryId(e.target.value);
+// }}
