@@ -133,7 +133,7 @@ export const RecordsPage = () => {
           categories={categories}
         />
       </div>
-      {!isDateCorrect ? <p>Date range incorrect</p> : null}
+      {!isDateCorrect ? <p style={{color:'red'}}>Date range incorrect</p> : null}
       {loadingRecords ? (
         <Spinner />
       ) : (

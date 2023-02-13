@@ -12,7 +12,6 @@ type DataTypeReports = {
   dataForPeriod: DataItem[];
 };
 
-
 export const ReportsPage = () => {
   useActivePage('Reports');
   let [startDate, setStartDate] = useState('');
@@ -45,13 +44,36 @@ export const ReportsPage = () => {
     // }, 1000);
   };
 
+  const renderCategoriesChart = () => {
+    if (data.dataCategories.length === 0) return null;
+
+    return (
+      <div className="flex-1 mr-4">
+        <p>Top 5 expenses:</p>
+        <PieChartSt data={data.dataCategories} />
+      </div>
+    );
+  };
+
+  const renderDataChart = () => {
+    if (data?.dataForPeriod[0]?.income === 0 && data?.dataForPeriod[0]?.expenses === 0) return null;
+
+    return (
+      <div className="flex-1 mr-4">
+        <p>Data for required period:</p>
+        <SimpleBarChart data={data.dataForPeriod} width={300} height={400} />
+      </div>
+    );
+  };
+
   useEffect(() => {
     fetchReports();
   }, [startDate, endDate]);
 
   return (
     <>
-      <div className="text-sm flex mb-8 items-end">
+      <p>Enter the date range to get your reports:</p>
+      <div className="text-sm flex mb-8 items-end mt-8">
         <div className="flex-1 mr-4">
           <label
             htmlFor="startDate"
@@ -87,10 +109,15 @@ export const ReportsPage = () => {
           />
         </div>
       </div>
-      Top 5 expenses:
-      <PieChartSt data={data.dataCategories} />
-      Data for required period:
-      <SimpleBarChart data={data.dataForPeriod} width={300} height={400} />
+
+      {!isDateCorrect ? (
+        <p style={{ color: 'red' }}>Date range incorrect</p>
+      ) : (
+        <div className="text-sm flex mb-8 items-end mt-8">
+          {renderCategoriesChart()}
+          {renderDataChart()}
+        </div>
+      )}
     </>
   );
 };
