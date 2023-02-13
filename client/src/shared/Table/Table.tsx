@@ -1,12 +1,87 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { PieChartSt } from 'widgets/PieChartSt';
 
 export const Table = ({ income }: { income: number }) => {
+  const [fedTax, setFedTax] = useState(0);
+  const [provTax, setProvTax] = useState(0);
+  const [cppTax, setCppTax] = useState(0);
+  const [eiTax, setEiTax] = useState(0);
+
   const data = [
-    { name: 'Net pay', value: income - income * 0.28 },
-    { name: 'Total tax', value: income * 0.28 },
+    { name: 'Net pay', value: income - (eiTax + cppTax + provTax + fedTax) },
+    { name: 'Total tax', value: eiTax + cppTax + provTax + fedTax },
   ];
 
+  function federalTax(val: number) {
+    if (val <= 53359) {
+      return Math.floor(val * 0.15);
+    } else if (val > 53359 && val <= 106717) {
+      return Math.floor(53359 * 0.15 + (val - 53359) * 0.205);
+    } else if (val > 106717 && val <= 165430) {
+      return Math.floor(53359 * 0.15 + (106717 - 53359) * 0.205 + (val - 106717) * 0.26);
+    } else if (val > 165430 && val <= 235675) {
+      return Math.floor(
+        53359 * 0.15 + (106717 - 53359) * 0.205 + (165430 - 106717) * 0.26 + (val - 165430) * 0.29
+      );
+    } else {
+      return Math.floor(
+        53359 * 0.15 +
+          (106717 - 53359) * 0.205 +
+          (165430 - 106717) * 0.26 +
+          (235675 - 165430) * 0.29 +
+          (val - 235675) * 0.33
+      );
+    }
+  }
+
+  function provincialTax(val: number) {
+    if (val <= 49231) {
+      return Math.floor(val * 0.0505);
+    } else if (val > 49231 && val <= 98463) {
+      return Math.floor(49231 * 0.0505 + (val - 49231) * 0.0915);
+    } else if (val > 98463 && val <= 150000) {
+      return Math.floor(49231 * 0.0505 + (98463 - 49231) * 0.0915 + (val - 98463) * 0.1116);
+    } else if (val > 150000 && val <= 220000) {
+      return Math.floor(
+        49231 * 0.0505 +
+          (98463 - 49231) * 0.0915 +
+          (150000 - 98463) * 0.1116 +
+          (val - 150000) * 0.1216
+      );
+    } else {
+      return Math.floor(
+        49231 * 0.0505 +
+          (98463 - 49231) * 0.0915 +
+          (150000 - 98463) * 0.1116 +
+          (220000 - 150000) * 0.1216 +
+          (val - 220000) * 0.1316
+      );
+    }
+  }
+  function cppTaxCalc(val: number) {
+    if (val <= 66600 && val > 0) {
+      return Math.floor((val - 3500) * 0.0595);
+    } else if (val > 66600) {
+      return Math.floor((66600 - 3500) * 0.0595);
+    } else {
+      return 0;
+    }
+  }
+  function eiTaxCalc(val: number) {
+    if (val <= 61500 && val > 0) {
+      return Math.floor(val * 0.0163);
+    } else if (val > 61500) {
+      return Math.floor(61500 * 0.0163);
+    } else {
+      return 0;
+    }
+  }
+  useEffect(() => {
+    setFedTax(federalTax(income));
+    setProvTax(provincialTax(income));
+    setCppTax(cppTaxCalc(income));
+    setEiTax(eiTaxCalc(income));
+  }, [income]);
   return (
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">
@@ -35,7 +110,7 @@ export const Table = ({ income }: { income: number }) => {
               >
                 Federal Tax
               </th>
-              <td className="px-6 py-4">{income * 0.2}</td>
+              <td className="px-6 py-4">{fedTax}</td>
             </tr>
             <tr className="border-b border-gray-200 dark:border-gray-700">
               <th
@@ -44,7 +119,7 @@ export const Table = ({ income }: { income: number }) => {
               >
                 Provincial Tax
               </th>
-              <td className="px-6 py-4">{income * 0.05}</td>
+              <td className="px-6 py-4">{provTax}</td>
             </tr>
             <tr className="border-b border-gray-200 dark:border-gray-700">
               <th
@@ -53,7 +128,7 @@ export const Table = ({ income }: { income: number }) => {
               >
                 CPP
               </th>
-              <td className="px-6 py-4">{income * 0.02}</td>
+              <td className="px-6 py-4">{cppTax}</td>
             </tr>
             <tr className="border-b border-gray-200 dark:border-gray-700">
               <th
@@ -62,7 +137,7 @@ export const Table = ({ income }: { income: number }) => {
               >
                 EI
               </th>
-              <td className="px-6 py-4">{income * 0.01}</td>
+              <td className="px-6 py-4">{eiTax}</td>
             </tr>
             <tr className="border-b border-gray-200 dark:border-gray-700">
               <th
@@ -71,9 +146,7 @@ export const Table = ({ income }: { income: number }) => {
               >
                 TOTAL TAX
               </th>
-              <td className="px-6 py-4">
-                {income * 0.01 + income * 0.02 + income * 0.05 + income * 0.2}
-              </td>
+              <td className="px-6 py-4">{eiTax + cppTax + provTax + fedTax}</td>
             </tr>
           </tbody>
         </table>
