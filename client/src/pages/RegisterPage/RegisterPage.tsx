@@ -1,4 +1,8 @@
+import { useActions } from 'app/store/hooks/useActions';
+import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
 import { useState, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import * as CheckingActionCreators from 'app/store/action-creators/checking';
 
 export const RegisterPage = () => {
   const queryParams = new URLSearchParams(window.location.search);
@@ -7,7 +11,6 @@ export const RegisterPage = () => {
   const [inputValuePassword, setInputValuePassword] = useState('');
   const [inputValueConfirm, setInputValueConfirm] = useState('');
   const [error, setError] = useState(errorBack);
-  const [check, setCheck] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     if (inputValuePassword !== inputValueConfirm) {
@@ -15,10 +18,14 @@ export const RegisterPage = () => {
       setError('password_mismatch');
     }
   };
-  const changeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheck(!check);
+
+  const { setCheckTerms } = useActions(CheckingActionCreators);
+  const { check } = useTypedSelector((state) => state.checkterms);
+  console.log('🚀 ~ check', check);
+
+  const checkTerms = () => {
+    setCheckTerms(!check);
   };
-  console.log(check);
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -103,11 +110,10 @@ export const RegisterPage = () => {
               <div className="flex items-start">
                 <div className="flex items-center h-5">
                   <input
-                    // value={check}
-                    // onChange={changeCheck}
-                    onChange={() => setCheck(!check)}
+                    onChange={checkTerms}
                     id="terms"
                     aria-describedby="terms"
+                    checked={check}
                     type="checkbox"
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-green-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-green-600 dark:ring-offset-gray-800"
                     required
@@ -116,12 +122,11 @@ export const RegisterPage = () => {
                 <div className="ml-3 text-sm">
                   <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">
                     I accept the{' '}
-                    <a
-                      className="font-medium text-green-600 hover:underline dark:text-green-500"
-                      href="/terms_and_conditions"
-                    >
-                      Terms and Conditions
-                    </a>
+                    <Link to="/terms_and_conditions">
+                      <span className="font-medium text-green-600 hover:underline dark:text-green-500">
+                        Terms and Conditions
+                      </span>
+                    </Link>
                   </label>
                 </div>
               </div>
