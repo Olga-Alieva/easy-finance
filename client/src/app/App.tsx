@@ -14,6 +14,10 @@ import { ReportsPage } from 'pages/ReportsPage';
 import { TaxesPage } from 'pages/TaxesPage';
 import { DocumentsPage } from 'pages/DocumentsPage';
 import { EditEntryPage } from 'pages/EditEntryPage';
+import { AboutPage } from 'pages/AboutPage';
+import { PricingPage } from 'pages/PricingPage';
+import { ServicesPage } from 'pages/ServicesPage';
+import { ContactsPage } from 'pages/ContactsPage';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -58,7 +62,6 @@ function App() {
           path="/statistics"
           element={
             <ProtectedRoute>
-              {/* <SimpleBarChart /> */}
               <StatisticsPage />
             </ProtectedRoute>
           }
@@ -87,6 +90,10 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/contacts" element={<ContactsPage />} />
         {/* Using path="*"" means "match anything", so this route
           acts like a catch-all for URLs that we don't have explicit
           routes for. */}

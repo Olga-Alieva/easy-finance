@@ -20,6 +20,11 @@ const checkAuthRoutes = require('./routes/checkAuthUserRoutes');
 const recordsRoutes = require('./routes/recordsRoutes');
 const statisticsRoutes = require('./routes/statisticsRoutes');
 const reportsRoutes = require('./routes/reportsRoutes');
+// const aboutRoutes = require('./routes/aboutRoutes');
+// const pricingRoutes = require('./routes/pricingRoutes');
+// const contactsRoutes = require('./routes/contactsRoutes');
+// const servicesRoutes = require('./routes/servicesRoutes');
+
 // const documentsRoutes = require('./routes/documentsRoutes');
 // const taxesRoutes = require('./routes/taxesRoutes');
 
@@ -62,6 +67,11 @@ app.use('/records', recordsRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/statistics', statisticsRoutes);
 app.use('/reports', reportsRoutes);
+// app.use('/about', aboutRoutes);
+// app.use('/pricing', pricingRoutes);
+// app.use('/contacts', contactsRoutes);
+// app.use('/services', servicesRoutes);
+
 // app.use('/documents', documentsRoutes);
 // app.use('/taxes', taxesRoutes);
 
