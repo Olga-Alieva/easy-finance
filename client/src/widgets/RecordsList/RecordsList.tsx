@@ -1,16 +1,17 @@
 import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useCallback } from 'react';
 import * as RecordsActionCreators from 'app/store/action-creators/records';
 import { useActions } from 'app/store/hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 
 export const RecordsList: FC = () => {
+  const [isShown, setIsShown] = useState(false);
   const navigate = useNavigate();
   const { deleteRecordFetch } = useActions(RecordsActionCreators);
   const { records } = useTypedSelector((state) => state.records);
   const [loadingItem, setloadingItem] = React.useState<number | null>(null);
-
+  const [editingItem, setEditingItem] = React.useState<number | null>(null);
   const deleteRecord = useCallback(
     ({ id, type, amount }: { id: number; type: number; amount: string }) => {
       setloadingItem(id);
@@ -19,10 +20,15 @@ export const RecordsList: FC = () => {
     []
   );
 
+  const showEdit = useCallback((id: number) => {
+    setEditingItem(id);
+    setIsShown(true);
+  }, []);
+
   const editModal = (id: number) => {
     navigate(`/records/${id}`);
   };
-
+  console.log('isShown', isShown);
   return (
     <div>
       <div className="flex flex-col">
@@ -62,6 +68,8 @@ export const RecordsList: FC = () => {
                   {records.map((entry, i) => (
                     <tr
                       key={entry.id}
+                      onMouseEnter={() => showEdit(entry.id)}
+                      onMouseLeave={() => setIsShown(false)}
                       className={`border-b ${i % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -97,13 +105,15 @@ export const RecordsList: FC = () => {
                         </button>
                       </td>
                       <td className="">
-                        <button
-                          onClick={() => editModal(entry.id)}
-                          type="button"
-                          className="text-gray-500 text-xs bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                        >
-                          edit
-                        </button>
+                        {editingItem === entry.id && isShown ? (
+                          <button
+                            onClick={() => editModal(entry.id)}
+                            type="button"
+                            className="text-gray-500 text-xs bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                          >
+                            edit
+                          </button>
+                        ) : null}
                       </td>
                     </tr>
                   ))}

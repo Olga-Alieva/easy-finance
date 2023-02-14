@@ -102,7 +102,7 @@ const editRecord = async (req, res) => {
     const { id } = req.params;
     const { amount, category, date } = req.body;
     const entry = await Entry.findOne({ where: { id }, raw: true });
-    if (userId !== entry.user_id) {
+    if (userId === entry.user_id) {
       await Entry.update(
         {
           amount,

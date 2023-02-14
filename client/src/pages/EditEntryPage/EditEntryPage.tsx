@@ -5,11 +5,12 @@ import { RadioButton } from 'shared/RadioButton';
 import { Select } from 'shared/Select';
 
 export const EditEntryPage = () => {
+  const queryParams = new URLSearchParams(window.location.search);
+  const errorUrl = queryParams.get('error');
+  console.log('🚀 ~ error', errorUrl);
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log('🚀 ~ params', id);
   const { records } = useTypedSelector((state) => state.records);
-  console.log('🚀 ~ records', records);
   const [date, setDate] = useState('');
   const { categories, error, loading } = useTypedSelector((state) => state.categories);
 
@@ -33,10 +34,10 @@ export const EditEntryPage = () => {
 
   console.log(record);
   useEffect(() => {
-    setAmount(record.amount);
+    setAmount(record?.amount);
     setActive(record['Category.type_id']);
-    setDate(record.date);
-    setActiveCat(record.category_id);
+    setDate(record?.date);
+    setActiveCat(record?.category_id);
   }, []);
   console.log(activeCat);
   return (
