@@ -10,7 +10,7 @@ import { Spinner } from 'shared/Spinner';
 import { RecordsList } from 'widgets/RecordsList';
 import { useActivePage } from 'app/store/hooks/useActivePage';
 import ReactPaginate from 'react-paginate';
-import { ITEMS_PER_PAGE } from 'app/constants';
+import { ITEMS_PER_PAGE, TODAY } from 'app/constants';
 
 export const RecordsPage = () => {
   useActivePage('Records');
@@ -56,14 +56,25 @@ export const RecordsPage = () => {
       return 0;
     }
   }, [totalIncome, totalExpenses]);
-
+  //2023-02-14
   const isDateCorrect = useMemo(() => {
+    console.log(TODAY);
+    console.log('st', startDate);
+    console.log('end', endDate);
     if (endDate && startDate) {
-      if (new Date(endDate) >= new Date(startDate)) {
+      if (new Date(startDate) <= new Date() && new Date(endDate) > new Date()) {
+        return false;
+      } else if (endDate > TODAY && startDate > TODAY) {
+        return false;
+      } else if (new Date(endDate) >= new Date(startDate)) {
         return true;
       } else {
         return false;
       }
+    } else if (endDate > TODAY) {
+      return false;
+    } else if (startDate > TODAY) {
+      return false;
     } else {
       return true;
     }
@@ -133,7 +144,7 @@ export const RecordsPage = () => {
           categories={categories}
         />
       </div>
-      {!isDateCorrect ? <p style={{color:'red'}}>Date range incorrect</p> : null}
+      {!isDateCorrect ? <p style={{ color: 'red' }}>Date range incorrect</p> : null}
       {loadingRecords ? (
         <Spinner />
       ) : (

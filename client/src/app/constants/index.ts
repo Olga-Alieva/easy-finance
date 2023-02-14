@@ -14,7 +14,9 @@ export const ITEMS_PER_PAGE = 10;
 
 const currentDate = new Date();
 export const PREVIOUS_MONTH = currentDate.getUTCMonth();
+export const CURRENT_MONTH = currentDate.getUTCMonth() + 1;
 export const CURRENT_YEAR = currentDate.getUTCFullYear();
+export const CURRENT_DAY = currentDate.getUTCDate();
 
 export const MONTH: Record<number, string> = {
   1: 'January',
@@ -46,3 +48,8 @@ export const MONTH: Record<number, string> = {
 //   MB: { fedTax: 0.2, provTax: 0.05 },
 //   NB: { fedTax: 0.2, provTax: 0.05 },
 // };
+
+function formatMonth(arg: number) {
+  return arg.toString().length > 1 ? arg : `0${arg}`;
+}
+export const TODAY = CURRENT_YEAR + '-' + formatMonth(CURRENT_MONTH) + '-' + CURRENT_DAY;

@@ -1,3 +1,4 @@
+import { TODAY } from 'app/constants';
 import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ import { Select } from 'shared/Select';
 export const AddEntryPage: FC = () => {
   const navigate = useNavigate();
   const { categories, error, loading } = useTypedSelector((state) => state.categories);
-
+  const [isCorrectDate, setIsCorrectDate] = useState(true);
   // const categories: any[] = [];
 
   // const queryParams = new URLSearchParams(window.location.search);
@@ -27,7 +28,22 @@ export const AddEntryPage: FC = () => {
     () => categories.filter((el) => el.type_id === active),
     [categories, active]
   );
+  const [date, setDate] = useState('');
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value);
+  };
 
+  const checkDate = () => {
+    if (date > TODAY) {
+      return false;
+    } else return true;
+  };
+
+  useEffect(() => {
+    setIsCorrectDate(checkDate());
+  }, [date]);
+
+  console.log(isCorrectDate);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -59,6 +75,7 @@ export const AddEntryPage: FC = () => {
               </div>
 
               <Select title="Select a category of record" categories={currentCategories} />
+              {!isCorrectDate && <h3 className="text-red-600">DATE IS INCORRECT</h3>}
               <div>
                 <label
                   htmlFor="date"
@@ -68,6 +85,8 @@ export const AddEntryPage: FC = () => {
                 </label>
                 <input
                   type="date"
+                  onChange={handleDateChange}
+                  value={date}
                   // onChange={handleDateChange}
                   // value={`${date?.getFullYear()}-0${date?.getMonth() + 1}-${date?.getDate()}`}
                   name="date"
@@ -77,13 +96,17 @@ export const AddEntryPage: FC = () => {
                   required
                 />
               </div>
+              {}
               <div className="text-sm flex mb-8 items-end">
                 <button
+                  // type={isCorrectDate ? 'submit' : 'button'}
+                  disabled={!isCorrectDate}
                   type="submit"
-                  className="w-full mr-4 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  className="w-full mr-4 text-white bg-green-600 disabled:bg-gray-400 disabled:opacity-75 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                 >
                   Add
                 </button>
+
                 <button
                   onClick={() => navigate('/records')}
                   className="w-full text-white bg-gray-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"

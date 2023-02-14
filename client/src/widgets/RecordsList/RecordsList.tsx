@@ -6,7 +6,7 @@ import { useActions } from 'app/store/hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 
 export const RecordsList: FC = () => {
-  const [isShown, setIsShown] = useState(false);
+  // const [isShown, setIsShown] = useState(false);
   const navigate = useNavigate();
   const { deleteRecordFetch } = useActions(RecordsActionCreators);
   const { records } = useTypedSelector((state) => state.records);
@@ -20,15 +20,15 @@ export const RecordsList: FC = () => {
     []
   );
 
-  const showEdit = useCallback((id: number) => {
+  const showEdit = useCallback((id: number | null) => {
     setEditingItem(id);
-    setIsShown(true);
+    // setIsShown(true);
   }, []);
 
   const editModal = (id: number) => {
     navigate(`/records/${id}`);
   };
-  console.log('isShown', isShown);
+  // console.log('isShown', isShown);
   return (
     <div>
       <div className="flex flex-col">
@@ -69,7 +69,8 @@ export const RecordsList: FC = () => {
                     <tr
                       key={entry.id}
                       onMouseEnter={() => showEdit(entry.id)}
-                      onMouseLeave={() => setIsShown(false)}
+                      onMouseLeave={() => showEdit(null)}
+                      // onMouseLeave={() => setIsShown(false)}
                       className={`border-b ${i % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -105,7 +106,7 @@ export const RecordsList: FC = () => {
                         </button>
                       </td>
                       <td className="">
-                        {editingItem === entry.id && isShown ? (
+                        {editingItem === entry.id ? (
                           <button
                             onClick={() => editModal(entry.id)}
                             type="button"
