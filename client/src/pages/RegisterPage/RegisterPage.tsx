@@ -7,6 +7,7 @@ export const RegisterPage = () => {
   const [inputValuePassword, setInputValuePassword] = useState('');
   const [inputValueConfirm, setInputValueConfirm] = useState('');
   const [error, setError] = useState(errorBack);
+  const [check, setCheck] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     if (inputValuePassword !== inputValueConfirm) {
@@ -14,6 +15,10 @@ export const RegisterPage = () => {
       setError('password_mismatch');
     }
   };
+  const changeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheck(!check);
+  };
+  console.log(check);
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -98,6 +103,9 @@ export const RegisterPage = () => {
               <div className="flex items-start">
                 <div className="flex items-center h-5">
                   <input
+                    // value={check}
+                    // onChange={changeCheck}
+                    onChange={() => setCheck(!check)}
                     id="terms"
                     aria-describedby="terms"
                     type="checkbox"
@@ -110,7 +118,7 @@ export const RegisterPage = () => {
                     I accept the{' '}
                     <a
                       className="font-medium text-green-600 hover:underline dark:text-green-500"
-                      href="#"
+                      href="/terms_and_conditions"
                     >
                       Terms and Conditions
                     </a>
@@ -118,8 +126,9 @@ export const RegisterPage = () => {
                 </div>
               </div>
               <button
+                disabled={!check}
                 type="submit"
-                className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                className="w-full text-white bg-green-600 disabled:bg-gray-400 disabled:opacity-75 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               >
                 Create an account
               </button>

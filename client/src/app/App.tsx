@@ -18,6 +18,7 @@ import { AboutPage } from 'pages/AboutPage';
 import { PricingPage } from 'pages/PricingPage';
 import { ServicesPage } from 'pages/ServicesPage';
 import { ContactsPage } from 'pages/ContactsPage';
+import { TermsAndConditions } from 'pages/TermsAndConditions';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -94,6 +95,7 @@ function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
+        <Route path="/terms_and_conditions" element={<TermsAndConditions />} />
         {/* Using path="*"" means "match anything", so this route
           acts like a catch-all for URLs that we don't have explicit
           routes for. */}
