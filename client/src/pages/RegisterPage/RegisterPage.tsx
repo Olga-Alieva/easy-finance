@@ -4,13 +4,15 @@ import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import * as CheckingActionCreators from 'app/store/action-creators/checking';
 
+type ErrorType = 'email_exists' | 'error_unknown' | 'password_mismatch' | null;
+
 export const RegisterPage = () => {
   const queryParams = new URLSearchParams(window.location.search);
-  const errorBack = queryParams.get('error');
+  const errorBack = queryParams.get('error') as ErrorType;
 
   const [inputValuePassword, setInputValuePassword] = useState('');
   const [inputValueConfirm, setInputValueConfirm] = useState('');
-  const [error, setError] = useState(errorBack);
+  const [error, setError] = useState<ErrorType>(errorBack);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     if (inputValuePassword !== inputValueConfirm) {
@@ -21,7 +23,6 @@ export const RegisterPage = () => {
 
   const { setCheckTerms } = useActions(CheckingActionCreators);
   const { check } = useTypedSelector((state) => state.checkterms);
-  console.log('🚀 ~ check', check);
 
   const checkTerms = () => {
     setCheckTerms(!check);
@@ -58,11 +59,12 @@ export const RegisterPage = () => {
                   Your email
                 </label>
                 <input
+                  onChange={() => setError(null)}
                   type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                  placeholder="name@company.com"
+                  placeholder="name@gmail.com"
                   required
                 />
               </div>
@@ -83,7 +85,10 @@ export const RegisterPage = () => {
                   minLength={5}
                   maxLength={20}
                   value={inputValuePassword}
-                  onChange={(e) => setInputValuePassword(e.target.value)}
+                  onChange={(e) => {
+                    setInputValuePassword(e.target.value);
+                    setError(null);
+                  }}
                 />
               </div>
 
@@ -104,7 +109,10 @@ export const RegisterPage = () => {
                   minLength={5}
                   maxLength={20}
                   value={inputValueConfirm}
-                  onChange={(e) => setInputValueConfirm(e.target.value)}
+                  onChange={(e) => {
+                    setInputValueConfirm(e.target.value);
+                    setError(null);
+                  }}
                 />
               </div>
               <div className="flex items-start">

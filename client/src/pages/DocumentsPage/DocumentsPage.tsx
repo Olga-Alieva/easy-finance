@@ -76,7 +76,7 @@ export const DocumentsPage = () => {
           >
             {/* {showAll && <option value="">All</option>} */}
             {years?.map((item, i) => (
-              <option value={item} selected={item === CURRENT_YEAR} key={i}>
+              <option value={item ?? ''} key={i}>
                 {item}
               </option>
             ))}
@@ -91,15 +91,15 @@ export const DocumentsPage = () => {
         </button>
       </form>
 
-      <p className="mt-8">
+      <div className="mt-8">
         {docRender ? 'No saved documents in this year' : null}
         {docs.map((doc) => (
-          <p key={doc.id} className="mb-8">
+          <div key={doc.id} className="mb-8">
             <img src={`http://localhost:3502${doc.path}`} alt="" width={350} />
-            <div>title: {doc.title}</div>
-          </p>
+            <h2 className="mt-2">title: {doc.title}</h2>
+          </div>
         ))}
-      </p>
+      </div>
     </div>
   );
 };

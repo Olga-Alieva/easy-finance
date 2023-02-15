@@ -20,7 +20,7 @@ export const TermsAndConditions = () => {
     <>
       <p className="max-w-2xl mt-8 mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
         When you accept our TERMS AND CONDITIONS it means that we will keep your information and
-        data safe and secure. Please do not give access to your account to someone else.
+        data safe and secure. Please do not give access to your account to anyone else.
       </p>
 
       <button
