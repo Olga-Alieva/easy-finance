@@ -1,10 +1,11 @@
-// const express = require('express');
-// const checkUser = require('../middlewares/common');
+const express = require('express');
+const checkUser = require('../middlewares/common');
 
-// const router = express.Router();
+const router = express.Router();
 
-// const { renderStatistics } = require('../controllers/statisticsControllers');
+const { renderDocuments, uploadDocument } = require('../controllers/documentsControllers');
 
-// router.get('/', checkUser, renderStatistics);
+router.post('/find', checkUser, renderDocuments);
+router.post('/', checkUser, uploadDocument);
 
-// module.exports = router;
+module.exports = router;

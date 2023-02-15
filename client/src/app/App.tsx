@@ -19,6 +19,7 @@ import { PricingPage } from 'pages/PricingPage';
 import { ServicesPage } from 'pages/ServicesPage';
 import { ContactsPage } from 'pages/ContactsPage';
 import { TermsAndConditions } from 'pages/TermsAndConditions';
+import { AddDocument } from 'pages/AddDocument';
 
 function App() {
   const { getUser } = useContext(UserContext);
@@ -88,6 +89,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DocumentsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/documents/add"
+          element={
+            <ProtectedRoute>
+              <AddDocument />
             </ProtectedRoute>
           }
         />
