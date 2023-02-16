@@ -8,8 +8,12 @@ const renderDocuments = async (req, res) => {
   const userId = req.session?.userId;
   const { year } = req.body;
   if (userId) {
-    const documents = await Document.findAll({ where: { year, user_id: userId }, raw: true });
-    res.json(documents);
+    try {
+      const documents = await Document.findAll({ where: { year, user_id: userId }, raw: true });
+      res.json(documents);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 
@@ -19,7 +23,7 @@ const uploadDocument = async (req, res) => {
   if (userId) {
     try {
       if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('Ни один файл не был загружен.');
+        return res.status(400).send('No files were uploaded');
       }
       const sampleFile = req.files.doc;
       const filename = `${new Date().getTime()}_${sampleFile.name.replaceAll(' ', '_')}`;

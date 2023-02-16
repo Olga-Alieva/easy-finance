@@ -21,55 +21,62 @@ const renderRecords = async (req, res) => {
   };
 
   if (userId) {
-    const allEntries = await Entry.findAll({
-      order: [
-        ['date', 'DESC'],
-        ['category_id', 'DESC'],
-      ],
-      where: query,
-      raw: true,
-      include: { model: Category },
-    });
-    const entries = await Entry.findAll({
-      offset,
-      limit,
-      order: [
-        ['date', 'DESC'],
-        ['category_id', 'DESC'],
-      ],
-      where: query,
-      raw: true,
-      include: { model: Category },
-      // include: [{ model: Category, include: [{ model: Type }] }],
-    });
+    try {
+      const allEntries = await Entry.findAll({
+        order: [
+          ['date', 'DESC'],
+          ['category_id', 'DESC'],
+        ],
+        where: query,
+        raw: true,
+        include: { model: Category },
+      });
+      const entries = await Entry.findAll({
+        offset,
+        limit,
+        order: [
+          ['date', 'DESC'],
+          ['category_id', 'DESC'],
+        ],
+        where: query,
+        raw: true,
+        include: { model: Category },
+        // include: [{ model: Category, include: [{ model: Type }] }],
+      });
 
-    const totalIncome = Number(
-      allEntries
-        .filter((el) => el['Category.type_id'] === 2)
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-        .toFixed(2)
-    );
-    const totalExpenses = Number(
-      allEntries
-        .filter((el) => el['Category.type_id'] === 1)
-        .reduce((acc, el) => acc + Number(el.amount), 0)
-        .toFixed(2)
-    );
-    const totalEntries = await Entry.count({ where: query });
+      const totalIncome = Number(
+        allEntries
+          .filter((el) => el['Category.type_id'] === 2)
+          .reduce((acc, el) => acc + Number(el.amount), 0)
+          .toFixed(2)
+      );
+      const totalExpenses = Number(
+        allEntries
+          .filter((el) => el['Category.type_id'] === 1)
+          .reduce((acc, el) => acc + Number(el.amount), 0)
+          .toFixed(2)
+      );
+      const totalEntries = await Entry.count({ where: query });
 
-    res.json({ entries, totalIncome, totalExpenses, totalEntries });
+      res.json({ entries, totalIncome, totalExpenses, totalEntries });
+    } catch (err) {
+      console.log(err);
+    }
   }
 };
 
 const getCategories = async (req, res) => {
-  const categories = await Category.findAll({ raw: true });
-  res.json(categories);
+  try {
+    const categories = await Category.findAll({ raw: true });
+    res.json(categories);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const addRecord = async (req, res) => {
-  const { category, date, amount } = req.body;
-
   const userId = req.session?.userId;
+  const { category, date, amount } = req.body;
   try {
     if (userId) {
       await Entry.create({ user_id: userId, category_id: category, date, amount });
@@ -79,6 +86,7 @@ const addRecord = async (req, res) => {
     console.log(err);
   }
 };
+
 const deleteEntry = async (req, res) => {
   const userId = req.session?.userId;
   try {
@@ -115,6 +123,7 @@ const editRecord = async (req, res) => {
     } else {
       const message = 'edit_error';
       res.redirect(`/records/${id}?error=${message}`);
+      // TODO error-message
     }
   } catch (err) {
     console.log(err);
