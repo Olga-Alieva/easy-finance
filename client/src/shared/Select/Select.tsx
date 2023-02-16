@@ -1,7 +1,9 @@
+import { CategoryType } from 'app/types/categories';
+
 interface SelectProps {
-  categories?: any[];
+  categories?: CategoryType[];
   title?: string;
-  onChange?: (e: any) => void;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   showAll?: boolean;
   activeCat?: number | 0;
 }
@@ -13,11 +15,6 @@ export const Select = ({
   showAll = false,
   activeCat,
 }: SelectProps) => {
-  // console.log("🚀 ~ categories", categories);
-  // console.log('🚀 ~ showAll', showAll);
-
-  // console.log('find', categories?.find((el) => el.id === activeCat)?.category);
-
   return (
     <div>
       <label
@@ -43,7 +40,3 @@ export const Select = ({
     </div>
   );
 };
-
-// onChange={(e) => {
-//   setCategoryId(e.target.value);
-// }}

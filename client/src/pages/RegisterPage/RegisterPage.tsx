@@ -1,5 +1,5 @@
-import { useActions } from 'app/store/hooks/useActions';
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { useActions } from 'app/hooks/useActions';
+import { useTypedSelector } from 'app/hooks/useTypeSelector';
 import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import * as CheckingActionCreators from 'app/store/action-creators/checking';

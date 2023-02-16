@@ -2,7 +2,6 @@ import { DataItem } from 'pages/StatisticsPage/StatisticsPage';
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -19,7 +18,6 @@ export const SimpleBarChart = ({
   width?: number;
   height?: number;
 }) => {
-  console.log(data);
   return (
     <div className="max-w-sm">
       <ResponsiveContainer width={'100%'} height={height}>

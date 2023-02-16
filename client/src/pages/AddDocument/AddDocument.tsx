@@ -1,7 +1,7 @@
 import { CURRENT_YEAR } from 'app/constants';
 
 const years: number[] = [];
-for (let i = 2010; i <= CURRENT_YEAR; i += 1) {
+for (let i = CURRENT_YEAR - 6; i <= CURRENT_YEAR; i += 1) {
   years.push(i);
 }
 
@@ -17,11 +17,9 @@ export const AddDocument = () => {
         </label>
         <select
           defaultValue={CURRENT_YEAR}
-          // onChange={onChange}
           name="year"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          {/* {showAll && <option value="">All</option>} */}
           {years?.map((item, i) => (
             <option value={item} selected={item === CURRENT_YEAR} key={i}>
               {item}
@@ -41,7 +39,6 @@ export const AddDocument = () => {
         id="file_input"
         type="file"
         name="doc"
-        // onChange={handleFileChange}
       />
       <div className="mb-4 mt-6">
         <label
@@ -52,10 +49,6 @@ export const AddDocument = () => {
         </label>
         <input
           required
-          // value={title}
-          // onChange={() => {
-          //   setTitle(title);
-          // }}
           name="title"
           type="text"
           id="default-input"
@@ -64,9 +57,7 @@ export const AddDocument = () => {
       </div>
 
       <button
-        // onClick={() => navigate('/documents')}
         className="inline-flex mt-4 items-center justify-center px-10 py-2 mr-3 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
-        // className="w-full text-white bg-green-600 disabled:bg-gray-400 disabled:opacity-75 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         type="submit"
       >
         Upload

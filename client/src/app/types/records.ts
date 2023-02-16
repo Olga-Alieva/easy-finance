@@ -5,8 +5,22 @@ export enum RecordsActionTypes {
   FETCH_RECORD_DELETE = 'FETCH_RECORD_DELETE',
 }
 
+export type RecordsType = {
+  'Category.category': string;
+  'Category.createdAt': string;
+  'Category.id': number;
+  'Category.type_id': 1 | 2;
+  'Category.updatedAt': string;
+  amount: string;
+  category_id: number;
+  createdAt: string;
+  date: string;
+  id: number;
+  updatedAt: string;
+  user_id: number;
+};
 export interface RecordsState {
-  records: any[];
+  records: RecordsType[];
   loading: boolean;
   error: null | string;
   totalIncome: number;
@@ -15,7 +29,7 @@ export interface RecordsState {
 }
 
 interface RecordsPayload {
-  entries: any[];
+  entries: RecordsType[];
   totalExpenses: number;
   totalIncome: number;
   totalEntries: number;

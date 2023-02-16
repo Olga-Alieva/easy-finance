@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { useTypedSelector } from 'app/hooks/useTypeSelector';
 import { Alert } from 'shared/Alert';
 import { RadioButton } from 'shared/RadioButton';
 import { Select } from 'shared/Select';
@@ -8,14 +8,14 @@ import { TODAY } from 'app/constants';
 
 export const AddEntryPage: FC = () => {
   const [isCorrectDate, setIsCorrectDate] = useState(true);
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState<1 | 2>(1);
   const [amount, setAmount] = useState(0);
   const [touched, setTouched] = useState(false);
   const [date, setDate] = useState('');
 
   const navigate = useNavigate();
 
-  const { categories, error, loading } = useTypedSelector((state) => state.categories);
+  const { categories } = useTypedSelector((state) => state.categories);
 
   const currentCategories = useMemo(
     () => categories.filter((el) => el.type_id === active),
@@ -36,6 +36,7 @@ export const AddEntryPage: FC = () => {
 
   useEffect(() => {
     setIsCorrectDate(checkDate());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   return (

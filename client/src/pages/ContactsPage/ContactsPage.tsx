@@ -1,4 +1,4 @@
-import { useActivePage } from 'app/store/hooks/useActivePage';
+import { useActivePage } from 'app/hooks/useActivePage';
 
 export const ContactsPage = () => {
   useActivePage('Contacts');

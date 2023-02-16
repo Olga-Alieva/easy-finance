@@ -4,8 +4,16 @@ export enum CategoriesActionTypes {
   FETCH_CATEGORIES_ERROR = 'FETCH_CATEGORIES_ERROR',
 }
 
+export type CategoryType = {
+  category: string;
+  createdAt: string;
+  id: number;
+  type_id: number;
+  updatedAt: string;
+};
+
 export interface CategoriesState {
-  categories: any[];
+  categories: CategoryType[];
   loading: boolean;
   error: null | string;
 }
@@ -16,7 +24,7 @@ interface FetchCategoriesAction {
 
 interface FetchCategoriesSuccessAction {
   type: CategoriesActionTypes.FETCH_CATEGORIES_SUCCESS;
-  payload: any[];
+  payload: CategoryType[];
 }
 interface FetchCategoriesErrorAction {
   type: CategoriesActionTypes.FETCH_CATEGORIES_ERROR;

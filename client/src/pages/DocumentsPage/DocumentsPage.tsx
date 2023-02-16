@@ -1,5 +1,5 @@
 import { CURRENT_YEAR } from 'app/constants';
-import { useActivePage } from 'app/store/hooks/useActivePage';
+import { useActivePage } from 'app/hooks/useActivePage';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,6 @@ export const DocumentsPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.length === 0) setDocRender(true);
         else setDocRender(false);
         setDocs(data);

@@ -17,7 +17,7 @@ const regUser = async (req, res) => {
       res.redirect('/');
     });
   } catch (error) {
-    console.log('🚀 ~ error', error);
+    console.log(error);
     res.redirect('/register?error=error_unknown');
   }
 };

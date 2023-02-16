@@ -1,5 +1,5 @@
 import { START_OF_CURRENT_MONTH } from 'app/constants';
-import { useActivePage } from 'app/store/hooks/useActivePage';
+import { useActivePage } from 'app/hooks/useActivePage';
 import { DataItem } from 'pages/StatisticsPage/StatisticsPage';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useStore } from 'react-redux';

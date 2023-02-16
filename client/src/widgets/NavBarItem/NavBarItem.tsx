@@ -1,6 +1,6 @@
 import { FC, SetStateAction, Dispatch } from 'react';
 import { Link } from 'react-router-dom';
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { useTypedSelector } from 'app/hooks/useTypeSelector';
 import { NavigationType, PageType } from 'app/types/settings';
 
 interface NavBarItemProps {

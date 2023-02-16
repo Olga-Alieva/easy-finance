@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useActions } from 'app/store/hooks/useActions';
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { useActions } from 'app/hooks/useActions';
+import { useTypedSelector } from 'app/hooks/useTypeSelector';
 import { UserContext } from 'app/providers/UserContext';
 import * as CategoriesActionCreators from 'app/store/action-creators/categories';
 import * as RecordsActionCreators from 'app/store/action-creators/records';
 import { Select } from 'shared/Select';
 import { Spinner } from 'shared/Spinner';
 import { RecordsList } from 'widgets/RecordsList';
-import { useActivePage } from 'app/store/hooks/useActivePage';
+import { useActivePage } from 'app/hooks/useActivePage';
 import ReactPaginate from 'react-paginate';
 import { ITEMS_PER_PAGE, START_OF_CURRENT_MONTH, TODAY } from 'app/constants';
 import { Alert } from 'shared/Alert';
@@ -31,9 +31,9 @@ export const RecordsPage = () => {
   }, []);
 
   const { user } = useContext(UserContext);
-  const [categoryId, setCategoryId] = useState([]);
-  let [startDate, setStartDate] = useState('');
-  let [endDate, setEndDate] = useState('');
+  const [categoryId, setCategoryId] = useState<string>('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -71,8 +71,6 @@ export const RecordsPage = () => {
       }
     } else if (endDate > TODAY || startDate > TODAY) {
       return false;
-      // } else if (startDate > TODAY) {
-      //   return false;
     } else {
       return true;
     }
@@ -103,7 +101,6 @@ export const RecordsPage = () => {
           </label>
           <input
             type="date"
-            
             value={startDate || START_OF_CURRENT_MONTH}
             onChange={(e) => setStartDate(e.target.value)}
             name="startDate"

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { UserContext } from 'app/providers/UserContext';
 import { NavBarItem } from 'widgets/NavBarItem';
 import { NavBarBurger } from 'widgets/NavBarBurger';
-import { navigation } from 'app/constants';
 import { Avatar } from 'widgets/Avatar';
+import { navigation } from './constants';
 
 export const NavBar: FC = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);

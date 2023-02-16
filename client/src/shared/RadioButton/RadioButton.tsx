@@ -3,12 +3,12 @@ import { FC } from 'react';
 interface RadioButtonProps {
   title: string;
   active: number;
-  setActive: (active: number) => void;
+  setActive: React.Dispatch<React.SetStateAction<1 | 2>>;
 }
 
 export const RadioButton: FC<RadioButtonProps> = ({ title, active, setActive }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setActive(+event.target.value);
+    setActive(Number(event.target.value) as 1 | 2);
   };
 
   return (

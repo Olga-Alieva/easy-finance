@@ -51,19 +51,11 @@ const renderReports = async (req, res) => {
       .sort((a, b) => b[1] - a[1])
       .map(([key, val]) => ({ name: key, value: val }))
       .slice(0, 5);
-    // console.log('🚀 ~ newArr', dataCategories);
     dataForPeriod.push({
-      // name: 'req period',
       income: totalIncomeForReqPeriod,
       expenses: totalExpensesForReqPeriod,
     });
 
-    // dataForPeriod.push(
-    //   { name: 'expenses', value: totalExpensesForReqPeriod },
-    //   { name: 'income', value: totalIncomeForReqPeriod }
-    // );
-    console.log('🚀 ~ dataForPeriod', dataForPeriod);
-    // console.log('🚀 ~ dataCategories', dataCategories);
     res.json({ dataCategories, dataForPeriod });
   }
 };

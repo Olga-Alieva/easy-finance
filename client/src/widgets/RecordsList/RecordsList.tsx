@@ -1,8 +1,8 @@
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { useTypedSelector } from 'app/hooks/useTypeSelector';
 import React, { FC } from 'react';
 import { useCallback } from 'react';
 import * as RecordsActionCreators from 'app/store/action-creators/records';
-import { useActions } from 'app/store/hooks/useActions';
+import { useActions } from 'app/hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from 'shared/Alert';
 

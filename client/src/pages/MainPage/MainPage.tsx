@@ -1,4 +1,4 @@
-import { useActivePage } from 'app/store/hooks/useActivePage';
+import { useActivePage } from 'app/hooks/useActivePage';
 import { UserContext } from 'app/providers/UserContext';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,18 +15,14 @@ export const MainPage = () => {
             <></>
           ) : Object.keys(user)?.length !== 0 ? (
             <h1 className="max-w-2xl mb-6 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
-              {/* Money likes to be counted */}
               Make your money count
             </h1>
           ) : (
             <h1 className="max-w-2xl mb-6 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
-              {/* Money likes to be counted */}
               You can count on me
             </h1>
           )}
           <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-            {/* From checkout to global sales tax compliance, companies around the world use Flowbite to
-            simplify their payment stack. */}
             Sometimes people do not know why they spend so much money. Our service helps you find
             this out. You can follow statistics of your expenses, prepare reports and analyze them
             to improve your financial situation.
@@ -53,8 +49,7 @@ export const MainPage = () => {
             </Link>
           ) : (
             <>
-              <a
-                href="/login"
+              <Link to="/login"
                 className="mb-4 md:mb-0 inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
               >
                 Get started
@@ -70,13 +65,12 @@ export const MainPage = () => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-              </a>
-              <a
-                href="/contacts"
+              </Link>
+              <Link to="/contacts"
                 className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
               >
                 Speak to Sales
-              </a>
+              </Link>
             </>
           )}
         </div>

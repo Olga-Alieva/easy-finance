@@ -1,4 +1,4 @@
-import { ERROR, ERRORS_MAP } from 'app/constants';
+import { ERROR } from 'app/constants';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert } from 'shared/Alert';
@@ -21,7 +21,6 @@ export const LoginPage = () => {
             {error === 'password_incorrect' ? <Alert text={ERROR.PASSWORD_INCORRECT} /> : null}
             {error === 'email_not_found' ? <Alert text={ERROR.EMAIL_NOT_FOUND} /> : null}
             {error === 'error_unknown' ? <Alert text={ERROR.ERROR_UNKNOWN} /> : null}
-            {/* {error? <h3 className="text-red-600">{ERRORS_MAP[error]}</h3> : null} */}
             <form className="space-y-4 md:space-y-6" action="/login" method="POST">
               <div>
                 <label

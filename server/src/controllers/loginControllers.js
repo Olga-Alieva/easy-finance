@@ -18,7 +18,7 @@ const loginUser = async (req, res) => {
       return res.redirect('/login?error=email_not_found');
     }
   } catch (error) {
-    console.log('🚀 ~ error', error);
+    console.log(error);
     return res.redirect('/login?error=error_unknown');
   }
 };

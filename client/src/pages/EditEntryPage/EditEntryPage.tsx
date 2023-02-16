@@ -1,20 +1,21 @@
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { useTypedSelector } from 'app/hooks/useTypeSelector';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RadioButton } from 'shared/RadioButton';
 import { Select } from 'shared/Select';
 
 export const EditEntryPage = () => {
-  const queryParams = new URLSearchParams(window.location.search);
-  const errorUrl = queryParams.get('error');
-  console.log('🚀 ~ error', errorUrl);
+  // TODO: handle editing errors
+  // const queryParams = new URLSearchParams(window.location.search);
+  // const errorUrl = queryParams.get('error');
+  // TODO: check date and amount - alert
   const navigate = useNavigate();
   const { id } = useParams();
   const { records } = useTypedSelector((state) => state.records);
   const [date, setDate] = useState('');
-  const { categories, error, loading } = useTypedSelector((state) => state.categories);
+  const { categories } = useTypedSelector((state) => state.categories);
 
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState<1 | 2>(1);
   const [amount, setAmount] = useState(0);
   const [activeCat, setActiveCat] = useState(0);
 
@@ -32,14 +33,15 @@ export const EditEntryPage = () => {
     setDate(e.target.value);
   };
 
-  console.log(record);
   useEffect(() => {
-    setAmount(record?.amount);
-    setActive(record['Category.type_id']);
-    setDate(record?.date);
-    setActiveCat(record?.category_id);
+    setAmount(Number(record?.amount));
+    const newActive = record ? record['Category.type_id'] : 1;
+    setActive(newActive);
+    setDate(record?.date || '');
+    setActiveCat(record?.category_id || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(activeCat);
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -67,7 +69,6 @@ export const EditEntryPage = () => {
                   name="amount"
                   id="amount"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                  // placeholder="name@company.com"
                   required
                 />
               </div>

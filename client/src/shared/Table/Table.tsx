@@ -6,6 +6,7 @@ export const Table = ({ income }: { income: number }) => {
   const [provTax, setProvTax] = useState(0);
   const [cppTax, setCppTax] = useState(0);
   const [eiTax, setEiTax] = useState(0);
+  
   const totalTax = useMemo(
     () => eiTax + cppTax + provTax + fedTax,
     [eiTax, cppTax, provTax, fedTax]
