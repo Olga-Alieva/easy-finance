@@ -12,8 +12,8 @@ import { DataItem } from 'pages/StatisticsPage/StatisticsPage';
 
 export const OneBarChart = ({ data }: { data: DataItem[] }) => {
   return (
-    <div className="max-w-xs sm:max-w-xl">
-      <ResponsiveContainer width={'100%'} height={300}>
+    <div className="max-w-sm">
+      <ResponsiveContainer width={'100%'} height={400}>
         <BarChart
           data={data}
           margin={{

@@ -21,12 +21,12 @@ export const SimpleBarChart = ({
 }) => {
   console.log(data);
   return (
-    <div className="max-w-xs">
+    <div className="max-w-sm">
       <ResponsiveContainer width={'100%'} height={height}>
         <BarChart
           data={data}
           margin={{
-            top: 50,
+            top: 20,
             right: 0,
             left: 0,
             bottom: 5,

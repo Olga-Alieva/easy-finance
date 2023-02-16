@@ -32,13 +32,17 @@ export const StatisticsPage = () => {
 
   return (
     <>
-      <div className="mb-8">
-        <div className="mb-4">Statistics for the year of {CURRENT_YEAR}:</div>
-        <SimpleBarChart data={data.dataYear} />
-      </div>
-      <div>
-        <div className="mb-4">Your expenses for {MONTH[PREVIOUS_MONTH]}:</div>
-        <OneBarChart data={data.dataMonth} />
+      <div className="text-sm flex flex-col md:flex-row mb-8 md:items-end mt-8">
+        {/* <div className="mb-8"> */}
+        <div className="flex-1 mr-0 md:mr-4 mb-8 md:mb-0 ">
+          <div className="mb-4">Statistics for the year of {CURRENT_YEAR}:</div>
+          <SimpleBarChart data={data.dataYear} />
+        </div>
+        {/* <div> */}
+        <div className="flex-1 mr-0 md:mr-4">
+          <div className="mb-4">Your expenses for {MONTH[PREVIOUS_MONTH]}:</div>
+          <OneBarChart data={data.dataMonth} />
+        </div>
       </div>
     </>
   );

@@ -1,15 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useActivePage } from 'app/store/hooks/useActivePage';
 import axios from 'axios';
 import { Table } from 'shared/Table';
+import { useDebounce } from 'app/store/hooks/useDebounce';
+import { Spinner } from 'shared/Spinner';
 
 export const TaxesPage = () => {
   useActivePage('Taxes');
   const [income, setIncome] = useState(0);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const handleIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSearching(true);
     setIncome(Number(e.target.value));
   };
+
+  const debouncedIncome = useDebounce<number>(income, 1000);
+
+  useEffect(
+    () => {
+      if (debouncedIncome) {
+        setIsSearching(false);
+      }
+    },
+    [debouncedIncome] // Only call effect if debounced search term changes
+  );
 
   return (
     <div>
@@ -32,7 +47,13 @@ export const TaxesPage = () => {
           required
         />
       </div>
-      <Table income={income} />
+      {isSearching && income ? (
+        <div className="mt-8">
+          <Spinner />
+        </div>
+      ) : (
+        <Table income={debouncedIncome} />
+      )}
     </div>
   );
 };

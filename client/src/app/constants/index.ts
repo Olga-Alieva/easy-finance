@@ -61,6 +61,7 @@ export const navigation: NavigationType[] = [
   {
     name: 'Home',
     isHomePage: true,
+    to:'/'
   },
   {
     name: 'Records',

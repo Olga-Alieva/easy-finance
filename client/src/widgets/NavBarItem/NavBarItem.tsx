@@ -19,7 +19,7 @@ export const NavBarItem: FC<NavBarItemProps> = ({ navItem, setIsMenuVisible }) =
   return (
     <Link
       className={getMenuClass(navItem.name)}
-      to={`/${navItem.to || navItem.name.toLowerCase()}`}
+      to={`${navItem.to || '/' + navItem.name.toLowerCase()}`}
       onClick={() => setIsMenuVisible(false)}
     >
       {navItem.name}

@@ -86,6 +86,9 @@ export const Table = ({ income }: { income: number }) => {
     setCppTax(cppTaxCalc(income));
     setEiTax(eiTaxCalc(income));
   }, [income]);
+
+
+  
   return (
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-8">

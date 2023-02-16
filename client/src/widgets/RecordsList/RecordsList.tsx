@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import * as RecordsActionCreators from 'app/store/action-creators/records';
 import { useActions } from 'app/store/hooks/useActions';
 import { useNavigate } from 'react-router-dom';
+import { Alert } from 'shared/Alert';
 
 export const RecordsList: FC = () => {
   const navigate = useNavigate();
@@ -26,6 +27,10 @@ export const RecordsList: FC = () => {
   const editModal = (id: number) => {
     navigate(`/records/${id}`);
   };
+
+  if (records.length === 0) {
+    return <Alert text={'There is no data for given filters'} />;
+  }
 
   return (
     <div>

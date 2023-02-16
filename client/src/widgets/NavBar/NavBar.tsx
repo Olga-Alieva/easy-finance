@@ -1,10 +1,10 @@
 import { FC, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar } from 'flowbite-react';
 import { UserContext } from 'app/providers/UserContext';
 import { NavBarItem } from 'widgets/NavBarItem';
 import { NavBarBurger } from 'widgets/NavBarBurger';
 import { navigation } from 'app/constants';
+import { Avatar } from 'widgets/Avatar';
 
 export const NavBar: FC = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -37,11 +37,7 @@ export const NavBar: FC = () => {
             >
               Logout
             </button>
-
-            <Avatar
-              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-              rounded={true}
-            />
+            <Avatar imgSrc={'https://flowbite.com/docs/images/people/profile-picture-5.jpg'} />
           </div>
         ) : (
           <div className="flex md:order-2 pt-2 md:pt-4">

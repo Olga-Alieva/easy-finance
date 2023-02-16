@@ -48,7 +48,7 @@ export const ReportsPage = () => {
     if (data.dataCategories.length === 0) return null;
 
     return (
-      <div className="flex-1 mr-0 md:mr-4 mb-8 md:mb-2">
+      <div className="flex-1 mr-0 md:mr-4 mb-8 md:mb-0">
         <p>Top 5 expenses:</p>
         <PieChartSt data={data.dataCategories} />
       </div>
@@ -72,8 +72,9 @@ export const ReportsPage = () => {
 
   return (
     <div>
-      <p>Enter the date range to get your reports:</p>
-      <div className="text-sm flex mb-8 items-end mt-8">
+      <p className="mb-4 mt-4">Enter the date range to get your reports:</p>
+      {/* <div className="text-sm flex mb-8 items-end mt-8"> */}
+      <div className="text-sm flex flex-col md:flex-row mb-8 md:items-end ">
         <div className="flex-1 mr-4">
           <label
             htmlFor="startDate"
@@ -87,7 +88,7 @@ export const ReportsPage = () => {
             onChange={(e) => setStartDate(e.target.value)}
             name="startDate"
             id="startDate"
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+            className="bg-gray-50 border mb-4 md:mb-0 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
             required
           />
         </div>
