@@ -1,34 +1,27 @@
-import { TODAY } from 'app/constants';
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
-// import { ERRORS_MAP } from '../constants';
-// import RadioButton from '../components/form/RadioButton';
-// import Select from '../components/form/Select';
-
+import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
+import { Alert } from 'shared/Alert';
 import { RadioButton } from 'shared/RadioButton';
 import { Select } from 'shared/Select';
+import { TODAY } from 'app/constants';
 
 export const AddEntryPage: FC = () => {
-  const navigate = useNavigate();
-  const { categories, error, loading } = useTypedSelector((state) => state.categories);
   const [isCorrectDate, setIsCorrectDate] = useState(true);
-  // const categories: any[] = [];
-
-  // const queryParams = new URLSearchParams(window.location.search);
-  // const error = queryParams.get('error');
-
-  // const [categories, setCategories] = useState([]);
-  // const [date, setDate] = useState(new Date());
-  // console.log('🚀 ~ date?.getDate()', date?.getDate());
   const [active, setActive] = useState(1);
+  const [amount, setAmount] = useState(0);
+  const [touched, setTouched] = useState(false);
+  const [date, setDate] = useState('');
+
+  const navigate = useNavigate();
+
+  const { categories, error, loading } = useTypedSelector((state) => state.categories);
 
   const currentCategories = useMemo(
     () => categories.filter((el) => el.type_id === active),
     [categories, active]
   );
-  const [date, setDate] = useState('');
+
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
   };
@@ -39,11 +32,12 @@ export const AddEntryPage: FC = () => {
     } else return true;
   };
 
+  const isIncorrectAmount = useMemo(() => touched && amount <= 0, [touched, amount]);
+
   useEffect(() => {
     setIsCorrectDate(checkDate());
   }, [date]);
 
-  console.log(isCorrectDate);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -64,18 +58,23 @@ export const AddEntryPage: FC = () => {
                   Amount
                 </label>
                 <input
+                  onChange={(e) => {
+                    setAmount(Number(e.target.value));
+                    if (!touched) setTouched(true);
+                  }}
                   type="number"
                   step="0.01"
                   name="amount"
                   id="amount"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                  // placeholder="name@company.com"
+                  placeholder="enter the amount"
                   required
                 />
               </div>
 
               <Select title="Select a category of record" categories={currentCategories} />
-              {!isCorrectDate && <h3 className="text-red-600">DATE IS INCORRECT</h3>}
+              {!isCorrectDate && <Alert text={'DATE IS INCORRECT'} />}
+              {isIncorrectAmount ? <Alert text={'AMOUNT SHOULD BE ABOVE ZERO'} /> : null}
               <div>
                 <label
                   htmlFor="date"
@@ -86,21 +85,17 @@ export const AddEntryPage: FC = () => {
                 <input
                   type="date"
                   onChange={handleDateChange}
-                  value={date}
-                  // onChange={handleDateChange}
-                  // value={`${date?.getFullYear()}-0${date?.getMonth() + 1}-${date?.getDate()}`}
+                  value={date || TODAY}
                   name="date"
-                  id="amount"
+                  id="date"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                  // placeholder="name@company.com"
                   required
                 />
               </div>
               {}
               <div className="text-sm flex mb-8 items-end">
                 <button
-                  // type={isCorrectDate ? 'submit' : 'button'}
-                  disabled={!isCorrectDate}
+                  disabled={!isCorrectDate || isIncorrectAmount}
                   type="submit"
                   className="w-full mr-4 text-white bg-green-600 disabled:bg-gray-400 disabled:opacity-75 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                 >

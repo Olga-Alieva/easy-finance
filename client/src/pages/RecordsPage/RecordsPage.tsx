@@ -11,6 +11,7 @@ import { RecordsList } from 'widgets/RecordsList';
 import { useActivePage } from 'app/store/hooks/useActivePage';
 import ReactPaginate from 'react-paginate';
 import { ITEMS_PER_PAGE, TODAY } from 'app/constants';
+import { Alert } from 'shared/Alert';
 
 export const RecordsPage = () => {
   useActivePage('Records');
@@ -25,8 +26,7 @@ export const RecordsPage = () => {
     totalEntries,
   } = useTypedSelector((state) => state.records);
 
-  console.log('🚀 ~ totalExpenses', totalExpenses);
-  console.log('🚀 ~ totalIncome', totalIncome);
+
 
   useEffect(() => {
     fetchCategories();
@@ -59,7 +59,6 @@ export const RecordsPage = () => {
       return 0;
     }
   }, [totalIncome, totalExpenses]);
-  console.log('🚀 ~ total', total);
 
   const isDateCorrect = useMemo(() => {
     if (endDate && startDate) {
@@ -125,8 +124,7 @@ export const RecordsPage = () => {
           </label>
           <input
             type="date"
-            // onChange={handleDateChange}
-            // value={`${date?.getFullYear()}-0${date?.getMonth() + 1}-${date?.getDate()}`}
+            
             name="endDate"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -145,22 +143,24 @@ export const RecordsPage = () => {
         />
       </div>
       {!isDateCorrect ? (
-        <p className="mb-8 sm:mb-8" style={{ color: 'red' }}>
-          Date range incorrect
-        </p>
+       <Alert text={'DATE RANGE IS INCORRECT'}/>
       ) : null}
       {loadingRecords ? (
         <Spinner />
       ) : (
         <>
           <div className="text-sm flex mb-8">
-            <div className="flex-1 mr-16">
-              Income: <span className="text-green-700">{totalIncome?.toFixed(2)}</span>
-            </div>
-            <div className="flex-1">
-              Expenses: <span className="text-red-500">{totalExpenses?.toFixed(2)}</span>
-            </div>
-            {total && (
+            {totalIncome > 0 && (
+              <div className="flex-1 mr-16">
+                Income: <span className="text-green-700">{totalIncome?.toFixed(2)}</span>
+              </div>
+            )}
+            {totalExpenses > 0 && (
+              <div className="flex-1">
+                Expenses: <span className="text-red-500">{totalExpenses?.toFixed(2)}</span>
+              </div>
+            )}
+            {total !== 0 && (
               <div className="flex-1 ml-16">
                 Total:{' '}
                 <span className={`${total < 0 ? 'text-red-500' : 'text-green-700'}`}>{total}</span>

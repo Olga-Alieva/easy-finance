@@ -2,8 +2,6 @@ import { FC, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from 'flowbite-react';
 import { UserContext } from 'app/providers/UserContext';
-import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
-import { PageType } from 'app/types/settings';
 import { NavBarItem } from 'widgets/NavBarItem';
 import { NavBarBurger } from 'widgets/NavBarBurger';
 import { navigation } from 'app/constants';
@@ -11,12 +9,6 @@ import { navigation } from 'app/constants';
 export const NavBar: FC = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const { user, destroySession } = useContext(UserContext);
-  const { activePage } = useTypedSelector((state) => state.settings);
-
-  const getMenuClass = (currentPage: PageType) =>
-    `block py-2 pr-4 pl-3 md:p-0 border-b border-gray-100 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-green-700 md:dark:hover:bg-transparent md:dark:hover:text-white hover:md:text-green-500 ${
-      activePage === currentPage ? 'md:text-green-700' : ''
-    }`;
 
   const handleLogout = async () => {
     const response = await fetch('/logout');
@@ -37,7 +29,7 @@ export const NavBar: FC = () => {
         {!user ? (
           <></>
         ) : Object.keys(user)?.length !== 0 ? (
-          <div className="flex md:order-2 pt-2 md:pt-2">
+          <div className="flex lg:order-2 pt-2 md:pt-2">
             <button
               onClick={handleLogout}
               type="button"
@@ -73,18 +65,17 @@ export const NavBar: FC = () => {
             </Link>
           </div>
         )}
-        <div className="pr-2 md:pr-4">
+        <div className="pr-2 lg:pr-4">
           <NavBarBurger isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} />
         </div>
         <div
-          className={`shadow-md md:shadow-none w-full md:block md:w-auto px-2 ${
+          className={`shadow-md lg:shadow-none w-full lg:block lg:w-auto px-2 ${
             isMenuVisible ? '' : 'hidden'
           }`}
         >
-          <ul className="mt-4 flex flex-col md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium">
-            <Link to="/" className={getMenuClass('Home')} onClick={() => setIsMenuVisible(false)}>
-              Home
-            </Link>
+          <ul className="mt-4 flex flex-col lg:mt-0 lg:flex-row lg:space-x-8 lg:text-sm lg:font-medium">
+            {/* Home menu item */}
+            <NavBarItem navItem={navigation[0]} setIsMenuVisible={setIsMenuVisible} />
 
             {user && Object.keys(user)?.length !== 0 ? (
               <>

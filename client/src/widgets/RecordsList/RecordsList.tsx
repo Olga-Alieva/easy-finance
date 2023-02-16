@@ -58,8 +58,8 @@ export const RecordsList: FC = () => {
                     >
                       Date
                     </th>
-                    <th></th>
-                    <th></th>
+                    <th className="w-12"></th>
+                    <th className="w-12"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,6 @@ export const RecordsList: FC = () => {
                       key={entry.id}
                       onMouseEnter={() => showEdit(entry.id)}
                       onMouseLeave={() => showEdit(null)}
-                      // onMouseLeave={() => setIsShown(false)}
                       className={`border-b ${i % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                     >
                       <td className="pl-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -88,7 +87,7 @@ export const RecordsList: FC = () => {
                       <td className="text-sm text-gray-900 font-light pl-6 py-4 whitespace-nowrap">
                         {entry.date}
                       </td>
-                      <td className="pl-2">
+                      <td>
                         <button
                           onClick={() =>
                             deleteRecord({
@@ -100,10 +99,10 @@ export const RecordsList: FC = () => {
                           type="button"
                           className="text-gray-900 text-xs bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                         >
-                          {loadingItem === entry.id ? 'deleting...' : 'x'}
+                          {loadingItem === entry.id ? '...' : 'x'}
                         </button>
                       </td>
-                      <td className="pl-2">
+                      <td>
                         {editingItem === entry.id ? (
                           <button
                             onClick={() => editModal(entry.id)}

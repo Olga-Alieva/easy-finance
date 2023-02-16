@@ -3,6 +3,7 @@ import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
 import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import * as CheckingActionCreators from 'app/store/action-creators/checking';
+import { Alert } from 'shared/Alert';
 
 type ErrorType = 'email_exists' | 'error_unknown' | 'password_mismatch' | null;
 
@@ -36,15 +37,9 @@ export const RegisterPage = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
-            {error === 'email_exists' ? (
-              <h3 className="text-red-600">This email already exists</h3>
-            ) : null}
-            {error === 'error_unknown' ? (
-              <h3 className="text-red-600">Something went wrong</h3>
-            ) : null}
-            {error === 'password_mismatch' ? (
-              <h3 className="text-red-600">Passwords do not match</h3>
-            ) : null}
+            {error === 'email_exists' ? <Alert text={'This email already exists'} /> : null}
+            {error === 'error_unknown' ? <Alert text={'Something went wrong'} /> : null}
+            {error === 'password_mismatch' ? <Alert text={'Passwords do not match'} /> : null}
             <form
               className="space-y-4 md:space-y-6"
               action="/register"

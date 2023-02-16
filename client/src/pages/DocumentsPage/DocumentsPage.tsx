@@ -72,7 +72,7 @@ export const DocumentsPage = () => {
               setDocRender(false);
             }}
             name="year"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 max-w-sm border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             {/* {showAll && <option value="">All</option>} */}
             {years?.map((item, i) => (
@@ -96,7 +96,7 @@ export const DocumentsPage = () => {
         {docs.map((doc) => (
           <div key={doc.id} className="mb-8">
             <img src={`http://localhost:3502${doc.path}`} alt="" width={350} />
-            <h2 className="mt-2">title: {doc.title}</h2>
+            <h2 className="mt-2">{doc.title}</h2>
           </div>
         ))}
       </div>
