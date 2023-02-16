@@ -10,7 +10,7 @@ import { Spinner } from 'shared/Spinner';
 import { RecordsList } from 'widgets/RecordsList';
 import { useActivePage } from 'app/store/hooks/useActivePage';
 import ReactPaginate from 'react-paginate';
-import { ITEMS_PER_PAGE, TODAY } from 'app/constants';
+import { ITEMS_PER_PAGE, START_OF_CURRENT_MONTH, TODAY } from 'app/constants';
 import { Alert } from 'shared/Alert';
 
 export const RecordsPage = () => {
@@ -25,8 +25,6 @@ export const RecordsPage = () => {
     totalExpenses,
     totalEntries,
   } = useTypedSelector((state) => state.records);
-
-
 
   useEffect(() => {
     fetchCategories();
@@ -45,7 +43,7 @@ export const RecordsPage = () => {
     }
     fetchRecords({
       categoryId,
-      startDate,
+      startDate: startDate || START_OF_CURRENT_MONTH,
       endDate,
       offset: currentPage * ITEMS_PER_PAGE,
       limit: ITEMS_PER_PAGE,
@@ -105,9 +103,8 @@ export const RecordsPage = () => {
           </label>
           <input
             type="date"
-            // onChange={handleDateChange}
-            // value={`${date?.getFullYear()}-0${date?.getMonth() + 1}-${date?.getDate()}`}
-            value={startDate}
+            
+            value={startDate || START_OF_CURRENT_MONTH}
             onChange={(e) => setStartDate(e.target.value)}
             name="startDate"
             id="startDate"
@@ -124,7 +121,6 @@ export const RecordsPage = () => {
           </label>
           <input
             type="date"
-            
             name="endDate"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -142,9 +138,7 @@ export const RecordsPage = () => {
           categories={categories}
         />
       </div>
-      {!isDateCorrect ? (
-       <Alert text={'DATE RANGE IS INCORRECT'}/>
-      ) : null}
+      {!isDateCorrect ? <Alert text={'DATE RANGE IS INCORRECT'} /> : null}
       {loadingRecords ? (
         <Spinner />
       ) : (

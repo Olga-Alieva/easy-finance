@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { PieChartSt } from 'widgets/PieChartSt';
 
 export const Table = ({ income }: { income: number }) => {
@@ -6,10 +6,14 @@ export const Table = ({ income }: { income: number }) => {
   const [provTax, setProvTax] = useState(0);
   const [cppTax, setCppTax] = useState(0);
   const [eiTax, setEiTax] = useState(0);
+  const totalTax = useMemo(
+    () => eiTax + cppTax + provTax + fedTax,
+    [eiTax, cppTax, provTax, fedTax]
+  );
 
   const data = [
-    { name: 'Net pay', value: income - (eiTax + cppTax + provTax + fedTax) },
-    { name: 'Total tax', value: eiTax + cppTax + provTax + fedTax },
+    { name: 'Net pay', value: income - totalTax },
+    { name: 'Total tax', value: totalTax },
   ];
 
   function federalTax(val: number) {
@@ -94,12 +98,6 @@ export const Table = ({ income }: { income: number }) => {
               <th scope="col" className="px-6 py-3">
                 Tax deduction, CAD
               </th>
-              {/* <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                Category
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Price
-              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -128,7 +126,7 @@ export const Table = ({ income }: { income: number }) => {
               >
                 CPP
               </th>
-              <td className="px-6 py-4">{cppTax}</td>
+              <td className="px-6 py-4">{(cppTax > 0 && cppTax) || 0}</td>
             </tr>
             <tr className="border-b border-gray-200 dark:border-gray-700">
               <th
@@ -146,12 +144,12 @@ export const Table = ({ income }: { income: number }) => {
               >
                 TOTAL TAX
               </th>
-              <td className="px-6 py-4">{eiTax + cppTax + provTax + fedTax}</td>
+              <td className="px-6 py-4">{(totalTax > 0 && totalTax) || 0}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <PieChartSt data={data} />
+      {income > 0 && <PieChartSt data={data} />}
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { NavigationType } from "app/types/settings";
+import { NavigationType } from 'app/types/settings';
 
 export enum ERROR {
   PASSWORD_INCORRECT = 'You entered incorrect password',
   EMAIL_NOT_FOUND = 'Email you entered was not found',
-  ERROR_UNKNOWN = 'Something went wrong. Please try again',
+  ERROR_UNKNOWN = 'Something went wrong. Please try again.',
 }
 
 export const ERRORS_MAP = {
@@ -55,7 +55,7 @@ function formatMonth(arg: number) {
   return arg.toString().length > 1 ? arg : `0${arg}`;
 }
 export const TODAY = CURRENT_YEAR + '-' + formatMonth(CURRENT_MONTH) + '-' + CURRENT_DAY;
-
+export const START_OF_CURRENT_MONTH = CURRENT_YEAR + '-' + formatMonth(CURRENT_MONTH) + '-' + '01';
 
 export const navigation: NavigationType[] = [
   {

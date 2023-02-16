@@ -81,16 +81,16 @@ export const NavBar: FC = () => {
               <>
                 {navigation
                   .filter((item) => item.authOnly)
-                  .map((navItem) => (
-                    <NavBarItem navItem={navItem} setIsMenuVisible={setIsMenuVisible} />
+                  .map((navItem, i) => (
+                    <NavBarItem key={i} navItem={navItem} setIsMenuVisible={setIsMenuVisible} />
                   ))}
               </>
             ) : (
               <>
                 {navigation
                   .filter((item) => !item.authOnly && !item.isHomePage)
-                  .map((navItem) => (
-                    <NavBarItem navItem={navItem} setIsMenuVisible={setIsMenuVisible} />
+                  .map((navItem, i) => (
+                    <NavBarItem key={i} navItem={navItem} setIsMenuVisible={setIsMenuVisible} />
                   ))}
               </>
             )}

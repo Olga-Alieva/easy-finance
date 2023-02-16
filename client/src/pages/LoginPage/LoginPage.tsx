@@ -1,9 +1,14 @@
 import { ERROR, ERRORS_MAP } from 'app/constants';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Alert } from 'shared/Alert';
+
+type ErrorType = 'email_not_found' | 'error_unknown' | 'password_incorrect' | null;
 
 export const LoginPage = () => {
   const queryParams = new URLSearchParams(window.location.search);
-  const error = queryParams.get('error');
+  const errorBack = queryParams.get('error') as ErrorType;
+  const [error, setError] = useState<ErrorType>(errorBack);
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -13,7 +18,10 @@ export const LoginPage = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in and account
             </h1>
-            {/* {error ? <h3 className="text-red-600">{ERRORS_MAP[error]}</h3> : null} */}
+            {error === 'password_incorrect' ? <Alert text={ERROR.PASSWORD_INCORRECT} /> : null}
+            {error === 'email_not_found' ? <Alert text={ERROR.EMAIL_NOT_FOUND} /> : null}
+            {error === 'error_unknown' ? <Alert text={ERROR.ERROR_UNKNOWN} /> : null}
+            {/* {error? <h3 className="text-red-600">{ERRORS_MAP[error]}</h3> : null} */}
             <form className="space-y-4 md:space-y-6" action="/login" method="POST">
               <div>
                 <label
@@ -23,6 +31,7 @@ export const LoginPage = () => {
                   Your email
                 </label>
                 <input
+                  onChange={() => setError(null)}
                   type="email"
                   name="email"
                   id="email"
@@ -39,6 +48,7 @@ export const LoginPage = () => {
                   Password
                 </label>
                 <input
+                  onChange={() => setError(null)}
                   type="password"
                   name="password"
                   id="password"

@@ -1,37 +1,20 @@
+import { useState } from 'react';
 import { useActivePage } from 'app/store/hooks/useActivePage';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import { Table } from 'shared/Table';
 
 export const TaxesPage = () => {
   useActivePage('Taxes');
   const [income, setIncome] = useState(0);
+
   const handleIncome = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIncome(Number(e.target.value));
   };
-  const fetchApiData = async () => {
-    // const response = await axios.get('https://api.salestaxapi.ca/v2/federal/gst');
-    const response = await fetch('https://api.salestaxapi.ca');
-    const data = await response.json();
-    console.log('🚀 ~ response', data);
-  };
-
-  useEffect(() => {
-    fetchApiData();
-  }, []);
-  // function fedTax (income) => {
-  //   if(income<=50197){
-  //     return 0.015
-  //   }
-  //   else if(income>50197&&income<=100392){
-  //     return 0.
-  //   }
-  // };
 
   return (
     <div>
-      <h1 style={{ fontWeight: 'bold' , textAlign:'center'} }>Income tax calculator Ontario</h1>
-      <p className='mt-8'>Find out how much your salary is after tax</p>
+      <h1 style={{ fontWeight: 'bold', textAlign: 'center' }}>Income tax calculator Ontario</h1>
+      <p className="mt-8">Find out how much your salary is after tax</p>
       <div>
         <label
           htmlFor="type"

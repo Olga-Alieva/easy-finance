@@ -21,7 +21,7 @@ export const SimpleBarChart = ({
 }) => {
   console.log(data);
   return (
-    <div className="max-w-xs sm:max-w-xl">
+    <div className="max-w-xs">
       <ResponsiveContainer width={'100%'} height={height}>
         <BarChart
           data={data}

@@ -36,14 +36,14 @@ export const PieChartSt = ({ data }: { data: DataElem[] }) => {
   };
 
   return (
-    <div className="max-w-xs sm:max-w-xl">
-      <PieChart width={400} height={400}>
+    <div className="max-w-xs md:max-w-xl">
+      <PieChart width={320} height={400}>
         <Legend />
 
         <Pie
           data={data}
-          cx={200}
-          cy={200}
+          // cx={200}
+          // cy={200}
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={80}
