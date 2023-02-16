@@ -1,4 +1,3 @@
-import React from 'react';
 import { PieChart, Pie, Cell, Legend } from 'recharts';
 
 export type DataElem = {
@@ -7,15 +6,7 @@ export type DataElem = {
 };
 
 export const PieChartSt = ({ data }: { data: DataElem[] }) => {
-  // const data = [
-  //   { name: 'Group A', value: 400 },
-  //   { name: 'Group B', value: 300 },
-  //   { name: 'Group C', value: 300 },
-  //   { name: 'Group D', value: 200 },
-  // ];
-
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#00F'];
-  // const COLORS = ['#00C49F', '#FFBB28'];
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -45,23 +36,25 @@ export const PieChartSt = ({ data }: { data: DataElem[] }) => {
   };
 
   return (
-    <PieChart width={400} height={400}>
-      <Legend />
+    <div className="max-w-xs sm:max-w-xl">
+      <PieChart width={400} height={400}>
+        <Legend />
 
-      <Pie
-        data={data}
-        cx={200}
-        cy={200}
-        labelLine={false}
-        label={renderCustomizedLabel}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-    </PieChart>
+        <Pie
+          data={data}
+          cx={200}
+          cy={200}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={80}
+          fill="#8884d8"
+          dataKey="value"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </div>
   );
 };

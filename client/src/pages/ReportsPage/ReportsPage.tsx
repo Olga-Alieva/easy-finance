@@ -33,22 +33,16 @@ export const ReportsPage = () => {
     if (!isDateCorrect) {
       return;
     }
-    // setIsLoading(true);
-    // setTimeout(
-    // async () => {
     const response = await fetch(`/reports?&startDate=${startDate || ''}&endDate=${endDate || ''}`);
     const data = await response.json();
     setData(data);
-    console.log('🚀 ~ responseJson', data);
-    // setIsLoading(false);
-    // }, 1000);
   };
 
   const renderCategoriesChart = () => {
     if (data.dataCategories.length === 0) return null;
 
     return (
-      <div className="flex-1 mr-4">
+      <div className="flex-1 mr-0 sm:mr-4 mb-8 sm:mb-2">
         <p>Top 5 expenses:</p>
         <PieChartSt data={data.dataCategories} />
       </div>
@@ -59,7 +53,7 @@ export const ReportsPage = () => {
     if (data?.dataForPeriod[0]?.income === 0 && data?.dataForPeriod[0]?.expenses === 0) return null;
 
     return (
-      <div className="flex-1 mr-4">
+      <div className="flex-1 mr-0 sm:mr-4">
         <p>Data for required period:</p>
         <SimpleBarChart data={data.dataForPeriod} width={300} height={400} />
       </div>
@@ -71,7 +65,7 @@ export const ReportsPage = () => {
   }, [startDate, endDate]);
 
   return (
-    <>
+    <div>
       <p>Enter the date range to get your reports:</p>
       <div className="text-sm flex mb-8 items-end mt-8">
         <div className="flex-1 mr-4">
@@ -113,11 +107,11 @@ export const ReportsPage = () => {
       {!isDateCorrect ? (
         <p style={{ color: 'red' }}>Date range incorrect</p>
       ) : (
-        <div className="text-sm flex mb-8 items-end mt-8">
+        <div className="text-sm flex flex-col sm:flex-row mb-8 sm:items-end mt-8">
           {renderCategoriesChart()}
           {renderDataChart()}
         </div>
       )}
-    </>
+    </div>
   );
 };

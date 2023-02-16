@@ -25,6 +25,9 @@ export const RecordsPage = () => {
     totalEntries,
   } = useTypedSelector((state) => state.records);
 
+  console.log('🚀 ~ totalExpenses', totalExpenses);
+  console.log('🚀 ~ totalIncome', totalIncome);
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -56,11 +59,9 @@ export const RecordsPage = () => {
       return 0;
     }
   }, [totalIncome, totalExpenses]);
-  //2023-02-14
+  console.log('🚀 ~ total', total);
+
   const isDateCorrect = useMemo(() => {
-    console.log(TODAY);
-    console.log('st', startDate);
-    console.log('end', endDate);
     if (endDate && startDate) {
       if (new Date(startDate) <= new Date() && new Date(endDate) > new Date()) {
         return false;
@@ -71,10 +72,10 @@ export const RecordsPage = () => {
       } else {
         return false;
       }
-    } else if (endDate > TODAY) {
+    } else if (endDate > TODAY || startDate > TODAY) {
       return false;
-    } else if (startDate > TODAY) {
-      return false;
+      // } else if (startDate > TODAY) {
+      //   return false;
     } else {
       return true;
     }
@@ -86,8 +87,8 @@ export const RecordsPage = () => {
 
   return (
     <>
-      <div className="text-sm flex mb-8 items-end">
-        <Link to="/records/add">
+      <div className="text-sm flex flex-col md:flex-row mb-8 md:items-end ">
+        <Link to="/records/add" className="mb-4 md:mb-0">
           <button
             type="button"
             className="flex-1 focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-4 dark:focus:ring-yellow-900"
@@ -96,7 +97,7 @@ export const RecordsPage = () => {
           </button>
         </Link>
 
-        <div className="flex-1 mr-4">
+        <div className="flex-1 mr-0 md:mr-4">
           <label
             htmlFor="startDate"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -111,11 +112,11 @@ export const RecordsPage = () => {
             onChange={(e) => setStartDate(e.target.value)}
             name="startDate"
             id="startDate"
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+            className="mb-4 md:mb-0 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
             required
           />
         </div>
-        <div className="flex-1 mr-4">
+        <div className="flex-1 mr-0 md:mr-4">
           <label
             htmlFor="endDate"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -130,12 +131,11 @@ export const RecordsPage = () => {
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             id="endDate"
-            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+            className="mb-4 md:mb-0 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
             required
           />
         </div>
         <Select
-          // className="flex-1"
           showAll={true}
           onChange={(e) => {
             setCategoryId(e.target.value);
@@ -144,20 +144,24 @@ export const RecordsPage = () => {
           categories={categories}
         />
       </div>
-      {!isDateCorrect ? <p style={{ color: 'red' }}>Date range incorrect</p> : null}
+      {!isDateCorrect ? (
+        <p className="mb-8 sm:mb-8" style={{ color: 'red' }}>
+          Date range incorrect
+        </p>
+      ) : null}
       {loadingRecords ? (
         <Spinner />
       ) : (
         <>
           <div className="text-sm flex mb-8">
-            <div className="flex-1">
+            <div className="flex-1 mr-16">
               Income: <span className="text-green-700">{totalIncome?.toFixed(2)}</span>
             </div>
             <div className="flex-1">
               Expenses: <span className="text-red-500">{totalExpenses?.toFixed(2)}</span>
             </div>
             {total && (
-              <div className="flex-1">
+              <div className="flex-1 ml-16">
                 Total:{' '}
                 <span className={`${total < 0 ? 'text-red-500' : 'text-green-700'}`}>{total}</span>
               </div>
@@ -166,7 +170,7 @@ export const RecordsPage = () => {
           {user && Object.keys(user)?.length !== 0 ? (
             <>
               <RecordsList />
-              {totalEntries > 0 ? (
+              {totalEntries > 0 && totalEntries > ITEMS_PER_PAGE ? (
                 <div className="text-center mt-6">
                   {
                     <ReactPaginate

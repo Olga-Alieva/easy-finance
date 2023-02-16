@@ -1,3 +1,5 @@
+import { NavigationType } from "app/types/settings";
+
 export enum ERROR {
   PASSWORD_INCORRECT = 'You entered incorrect password',
   EMAIL_NOT_FOUND = 'Email you entered was not found',
@@ -53,3 +55,44 @@ function formatMonth(arg: number) {
   return arg.toString().length > 1 ? arg : `0${arg}`;
 }
 export const TODAY = CURRENT_YEAR + '-' + formatMonth(CURRENT_MONTH) + '-' + CURRENT_DAY;
+
+
+export const navigation: NavigationType[] = [
+  {
+    name: 'Home',
+    isHomePage: true,
+  },
+  {
+    name: 'Records',
+    authOnly: true,
+  },
+  {
+    name: 'Statistics',
+    authOnly: true,
+  },
+  {
+    name: 'Reports',
+    authOnly: true,
+  },
+  {
+    name: 'Taxes',
+    authOnly: true,
+  },
+  {
+    name: 'My Documents',
+    authOnly: true,
+    to: 'documents',
+  },
+  {
+    name: 'About',
+  },
+  {
+    name: 'Services',
+  },
+  {
+    name: 'Pricing',
+  },
+  {
+    name: 'Contacts',
+  },
+];

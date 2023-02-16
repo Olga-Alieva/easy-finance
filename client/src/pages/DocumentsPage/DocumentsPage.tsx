@@ -18,7 +18,7 @@ for (let i = 2010; i <= CURRENT_YEAR; i += 1) {
   years.push(i);
 }
 export const DocumentsPage = () => {
-  useActivePage('MyDocuments');
+  useActivePage('My Documents');
 
   const [year, setYear] = useState<number>(CURRENT_YEAR);
   const [docs, setDocs] = useState<DocType[]>([]);

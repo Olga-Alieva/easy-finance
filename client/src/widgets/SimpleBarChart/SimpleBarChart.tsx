@@ -13,7 +13,6 @@ import {
 
 export const SimpleBarChart = ({
   data,
-  width = 500,
   height = 400,
 }: {
   data: DataItem[];
@@ -22,26 +21,26 @@ export const SimpleBarChart = ({
 }) => {
   console.log(data);
   return (
-    <>
-      <BarChart
-        width={width}
-        height={height}
-        data={data}
-        margin={{
-          top: 20,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="income" fill="#82ca9d" />
-        <Bar dataKey="expenses" fill="#8884d8" />
-      </BarChart>
-    </>
+    <div className="max-w-xs sm:max-w-xl">
+      <ResponsiveContainer width={'100%'} height={height}>
+        <BarChart
+          data={data}
+          margin={{
+            top: 50,
+            right: 0,
+            left: 0,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="income" fill="#82ca9d" />
+          <Bar dataKey="expenses" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };

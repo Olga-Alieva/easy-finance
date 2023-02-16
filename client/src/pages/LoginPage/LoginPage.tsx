@@ -1,4 +1,5 @@
 import { ERROR, ERRORS_MAP } from 'app/constants';
+import { Link } from 'react-router-dom';
 
 export const LoginPage = () => {
   const queryParams = new URLSearchParams(window.location.search);
@@ -55,12 +56,12 @@ export const LoginPage = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Do not have an account?{' '}
-                <a
-                  href="/register"
+                <Link
+                  to="/register"
                   className="font-medium text-green-600 hover:underline dark:text-green-500"
                 >
                   Register here
-                </a>
+                </Link>
               </p>
             </form>
           </div>

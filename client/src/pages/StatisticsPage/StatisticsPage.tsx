@@ -32,10 +32,14 @@ export const StatisticsPage = () => {
 
   return (
     <>
-      Statistics for the year of {CURRENT_YEAR}:
-      <SimpleBarChart data={data.dataYear} />
-      Your expenses for {MONTH[PREVIOUS_MONTH]}:
-      <OneBarChart data={data.dataMonth} />
+      <div className="mb-8">
+        <div className="mb-4">Statistics for the year of {CURRENT_YEAR}:</div>
+        <SimpleBarChart data={data.dataYear} />
+      </div>
+      <div>
+        <div className="mb-4">Your expenses for {MONTH[PREVIOUS_MONTH]}:</div>
+        <OneBarChart data={data.dataMonth} />
+      </div>
     </>
   );
 };

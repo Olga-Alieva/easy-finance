@@ -1,6 +1,4 @@
 import { CURRENT_YEAR } from 'app/constants';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const years: number[] = [];
 for (let i = 2010; i <= CURRENT_YEAR; i += 1) {
@@ -8,19 +6,8 @@ for (let i = 2010; i <= CURRENT_YEAR; i += 1) {
 }
 
 export const AddDocument = () => {
-  const navigate = useNavigate();
-
   return (
     <form id="uploadForm" action="/documents" method="post" encType="multipart/form-data">
-      {/* <input type="file" name="sampleFile" /> */}
-      {/* <input type="submit" value="Upload!" /> */}
-      {/* <div style={{ border: '1px solid red' }}>
-          <input type="file" name="doc" onChange={handleFileChange} />
-        </div> */}
-
-      {/* <div>{file && `${file.name} - ${file.type}`}</div> */}
-
-      {/* <button onClick={handleUploadClick}>Upload</button> */}
       <div className="mb-6">
         <label
           htmlFor="categories"

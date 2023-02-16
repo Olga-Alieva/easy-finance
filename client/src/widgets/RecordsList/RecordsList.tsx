@@ -1,12 +1,11 @@
 import { useTypedSelector } from 'app/store/hooks/useTypeSelector';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useCallback } from 'react';
 import * as RecordsActionCreators from 'app/store/action-creators/records';
 import { useActions } from 'app/store/hooks/useActions';
 import { useNavigate } from 'react-router-dom';
 
 export const RecordsList: FC = () => {
-  // const [isShown, setIsShown] = useState(false);
   const navigate = useNavigate();
   const { deleteRecordFetch } = useActions(RecordsActionCreators);
   const { records } = useTypedSelector((state) => state.records);
@@ -22,13 +21,12 @@ export const RecordsList: FC = () => {
 
   const showEdit = useCallback((id: number | null) => {
     setEditingItem(id);
-    // setIsShown(true);
   }, []);
 
   const editModal = (id: number) => {
     navigate(`/records/${id}`);
   };
-  // console.log('isShown', isShown);
+
   return (
     <div>
       <div className="flex flex-col">
@@ -40,28 +38,28 @@ export const RecordsList: FC = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      className="text-sm font-medium text-gray-900 py-4 text-left"
                     ></th>
                     <th
                       scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      className="text-sm font-medium text-gray-900 pl-6 py-4 text-left"
                     >
                       Amount
                     </th>
                     <th
                       scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      className="text-sm font-medium text-gray-900 pl-6 py-4 text-left"
                     >
                       Category
                     </th>
                     <th
                       scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                      className="text-sm font-medium text-gray-900 pl-6 py-4 text-left"
                     >
                       Date
                     </th>
-                    <th style={{ width: '80px' }}></th>
-                    <th style={{ width: '80px' }}></th>
+                    <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -73,24 +71,24 @@ export const RecordsList: FC = () => {
                       // onMouseLeave={() => setIsShown(false)}
                       className={`border-b ${i % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                     >
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="pl-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {i + 1}
                       </td>
                       <td
-                        className={`text-sm  font-light px-6 py-4 whitespace-nowrap ${
+                        className={`text-sm  font-light pl-6 py-4 whitespace-nowrap ${
                           entry['Category.type_id'] === 1 ? 'text-red-500' : 'text-green-700'
                         }`}
                       >
                         {entry['Category.type_id'] === 1 ? '-' : '+'}
                         {entry.amount}
                       </td>
-                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      <td className="text-sm text-gray-900 font-light pl-6 py-4 whitespace-nowrap">
                         {entry['Category.category']}
                       </td>
-                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      <td className="text-sm text-gray-900 font-light pl-6 py-4 whitespace-nowrap">
                         {entry.date}
                       </td>
-                      <td className="">
+                      <td className="pl-2">
                         <button
                           onClick={() =>
                             deleteRecord({
@@ -105,7 +103,7 @@ export const RecordsList: FC = () => {
                           {loadingItem === entry.id ? 'deleting...' : 'x'}
                         </button>
                       </td>
-                      <td className="">
+                      <td className="pl-2">
                         {editingItem === entry.id ? (
                           <button
                             onClick={() => editModal(entry.id)}

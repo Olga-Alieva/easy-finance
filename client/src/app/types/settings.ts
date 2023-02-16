@@ -11,7 +11,7 @@ export type PageType =
   | 'Services'
   | 'Reports'
   | 'Statistics'
-  | 'MyDocuments'
+  | 'My Documents'
   | 'Taxes';
 
 export interface SettingsState {
@@ -22,3 +22,10 @@ export interface SetActivePageAction {
   type: SettingsActionTypes.SET_ACTIVE_PAGE;
   payload: PageType;
 }
+
+export type NavigationType = {
+  name: PageType;
+  to?: string;
+  authOnly?: boolean;
+  isHomePage?: boolean;
+};
