@@ -89,11 +89,16 @@ export const DocumentsPage = () => {
         </button>
       </form>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-wrap gap-2 md:gap-16">
         {docRender ? 'No saved documents in this year' : null}
         {docs.map((doc) => (
           <div key={doc.id} className="mb-8">
-            <img src={`http://localhost:3502${doc.path}`} alt="" width={350} />
+            <img
+              src={`http://localhost:3503${doc.path}`}
+              alt=""
+              width={350}
+              style={{ border: '5px solid #ffd4c8' }}
+            />
             <h2 className="mt-2">{doc.title}</h2>
           </div>
         ))}
