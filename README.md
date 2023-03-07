@@ -1,8 +1,6 @@
-# EASY FINANCE - FULL STACK WEB APPLICATION
+# EASY FINANCE - full stack Web Application
 
-## KEEP YOUR EXPENCES UNDER CONTROL
-
-Easy Finance is a full stack application that helps your keep track of your income and expenses. It also helps you keep all needed tax documents in one place and have a convenient access to them at your need.
+Keep your expenses under control! Easy Finance is a full stack application that helps your keep track of your income and expenses. It also helps you keep all needed tax documents in one place and have a convenient access to them at your need.
 
 ### Technological stack
 
