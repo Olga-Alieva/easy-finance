@@ -21,6 +21,10 @@ Keep your expenses under control! Easy Finance is a full stack application that 
 - Statistics reports
 - Charts
 
+## Running the App
+
+Clone the repo, navigate to `server` folder and run `npm i && npm run dev`. In a separate terminal navigate to `client` and run `npm i && npm start`.
+
 ![screenshot of the application](/readme-assets/screen1.png)
 
 ![screenshot of the application](/readme-assets/screen2.png)
