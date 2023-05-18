@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useActivePage } from 'app/hooks/useActivePage';
-import axios from 'axios';
 import { Table } from 'shared/Table';
 import { useDebounce } from 'app/hooks/useDebounce';
 import { Spinner } from 'shared/Spinner';
